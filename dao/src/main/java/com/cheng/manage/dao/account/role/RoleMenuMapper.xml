@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cheng.manage.dao.account.role.RoleMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.cheng.manage.entity.account.role.RoleMenuBO" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="menu_id" property="menuId" jdbcType="INTEGER" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+  </resultMap>
+
+    <!-- 通过角色Id删除角色菜单表 -->
+    <delete id="deleteRoleMenuByRoleId">
+      DELETE FROM role_menu WHERE role_id = #{roleId}
+    </delete>
+
+  <!-- 通过角色ID查询角色拥有的菜单ID列表 -->
+  <select id="getRoleMneuByRoleId" resultType="java.lang.Integer">
+    SELECT
+        rm.menu_id
+    FROM
+        role_menu rm, menu m
+    WHERE
+        rm.menu_id = m.id
+        AND m.has_children = 0
+        AND m.has_permission = 0
+        AND m.status = 1
+        AND role_id = #{roleId}
+  </select>
+
+    <!-- 通过角色Id查询菜单id列表 -->
+    <select id="getRoleIdListByRoleId" resultType="java.lang.Integer">
+        SELECT
+            rm.menu_id
+        FROM
+            role_menu rm, menu m
+        WHERE
+            rm.menu_id = m.id
+            AND m.status = 1
+            AND rm.role_id = #{roleId}
+    </select>
+</mapper>

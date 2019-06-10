@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheng.manage.dao.file.UnusedFileMapper">
+    <resultMap id="BaseResultMap" type="com.cheng.manage.entity.file.UnusedFileBO">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="file_id" jdbcType="BIGINT" property="fileId"/>
+        <result column="upload_time" jdbcType="TIMESTAMP" property="uploadTime"/>
+    </resultMap>
+
+    <!-- 根据文件ID删除未使用记录 -->
+    <delete id="deleteByFileId">
+        DELETE FROM unused_file WHERE file_id = #{fileId}
+    </delete>
+
+    <!-- 根据文id查询未使用文件 -->
+    <select id="countByFileId" resultType="java.lang.Integer">
+        SELECT count(id) FROM unused_file WHERE file_id = #{fileId}
+    </select>
+
+    <!-- 获取需要删除的未使用文件列表 -->
+    <select id="getDeleteList" resultMap="BaseResultMap">
+        <![CDATA[ SELECT id, file_id FROM unused_file WHERE upload_time < #{deleteDay} ]]>
+    </select>
+</mapper>

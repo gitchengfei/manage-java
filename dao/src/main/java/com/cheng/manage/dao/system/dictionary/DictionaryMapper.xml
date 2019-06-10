@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cheng.manage.dao.system.dictionary.DictionaryMapper">
+    <resultMap id="BaseResultMap" type="com.cheng.manage.entity.system.dictionary.DictionaryBO">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="code" property="key" jdbcType="VARCHAR"/>
+        <result column="value" property="value" jdbcType="VARCHAR"/>
+        <result column="display_order" property="displayOrder" jdbcType="INTEGER"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="BIT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_id" property="createId" jdbcType="INTEGER"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="update_id" property="updateId" jdbcType="INTEGER"/>
+        <result column="reserved_one" property="reservedOne" jdbcType="VARCHAR"/>
+        <result column="reserved_two" property="reservedTwo" jdbcType="VARCHAR"/>
+        <result column="reserved_three" property="reservedThree" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 根据Key查询总数 -->
+    <select id="countByKey" resultType="int">
+        SELECT
+            count(id)
+        FROM
+            dictionary
+        WHERE
+            code = #{key}
+        <if test="excludeId != null">
+            AND id != #{excludeId}
+        </if>
+    </select>
+
+    <!-- 根据value查询总数 -->
+    <select id="countByValue" resultType="int">
+        SELECT
+            count(id)
+        FROM
+            dictionary
+        WHERE
+            value = #{value}
+            <if test="parentId != null">
+                AND parent_id = #{parentId}
+            </if>
+            <if test="excludeId != null">
+                AND id != #{excludeId}
+            </if>
+    </select>
+
+    <!-- 根据名称查询总数 -->
+    <select id="countByName" resultType="int">
+        SELECT
+            count(id)
+        FROM
+            dictionary
+        WHERE
+            name = #{name}
+            <if test="parentId != null">
+                AND parent_id = #{parentId}
+            </if>
+            <if test="excludeId != null">
+                AND id != #{excludeId}
+            </if>
+    </select>
+
+    <!-- 根据父节点查询总数 -->
+    <select id="countByParentId" resultType="int">
+        SELECT count(id) FROM dictionary WHERE parent_id = #{parentId}
+    </select>
+
+    <!-- 根据ID获取名称 -->
+    <select id="getNameByID" resultType="java.lang.String">
+        SELECT name FROM dictionary WHERE id = #{id}
+    </select>
+
+    <!-- 通过数据字典父节点ID查询数据字典列表 -->
+    <select id="getDictionaryListByParentId" resultMap="BaseResultMap">
+        SELECT
+            id, `name`, code, `value`, display_order, parent_id, status, create_time, create_id, update_time, update_id
+        FROM
+            dictionary
+        WHERE
+            parent_id = #{parentId}
+            order by display_order
+    </select>
+
+    <!-- 通过数据字典固定编码查询value -->
+    <select id="getValueByCode" resultType="java.lang.String">
+        SELECT `value` FROM dictionary WHERE code = #{code}
+    </select>
+
+    <!-- 通过固定编码查询Id -->
+    <select id="getIDByCode" resultType="java.lang.Integer">
+        SELECT id FROM dictionary WHERE code = #{code}
+    </select>
+
+    <!-- 查询数据字典下拉列表 -->
+    <select id="getSelectList" resultType="com.cheng.manage.entity.system.dictionary.Select">
+        SELECT
+            code AS `key`, value, name
+        FROM
+            dictionary
+        WHERE
+            parent_id = #{parentId}
+         ORDER  BY  display_order
+    </select>
+
+    <!-- 通过id查询修改时间 -->
+    <select id="getUpdateTimeById" resultType="java.util.Date">
+        SELECT update_time FROM dictionary WHERE id = #{id}
+    </select>
+
+    <!-- 根据数据字典固定编码查询数据字典 -->
+    <select id="getDictionaryByKey" resultMap="BaseResultMap">
+        SELECT id, status, parent_id FROM dictionary WHERE code = #{code}
+    </select>
+
+    <!-- 根据数据字典id查询数据字典 -->
+    <select id="getDictionaryById" resultMap="BaseResultMap">
+        SELECT id, status, parent_id FROM dictionary WHERE id = #{id}
+    </select>
+
+    <!-- 根据固定编码查询名称 -->
+    <select id="getNameByCode" resultType="java.lang.String">
+        SELECT name FROM dictionary WHERE code = #{code}
+    </select>
+
+
+</mapper>

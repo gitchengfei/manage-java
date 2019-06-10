@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cheng.manage.dao.account.account.AccountMapper" >
+  <resultMap id="BaseResultMap" type="com.cheng.manage.entity.account.account.AccountBO" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="is_delete" property="delete" jdbcType="BIT" />
+    <result column="head_portrait" property="headPortrait" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="reserved_one" property="reservedOne" jdbcType="VARCHAR" />
+    <result column="reserved_two" property="reservedTwo" jdbcType="VARCHAR" />
+    <result column="reserved_three" property="reservedThree" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <!-- 查询账号 -->
+    <select id="getAccount" resultMap="BaseResultMap">
+      SELECT
+        id,
+        username,
+        password,
+        `name`,
+        phone,
+        email,
+        status,
+        is_delete,
+        head_portrait
+      FROM
+        account
+      WHERE
+        is_delete = 0
+       <if test="type == 1">
+         AND username = #{username}
+       </if>
+      <if test="type == 2">
+        AND phone = #{username}
+      </if>
+      <if test="type == 3">
+        AND email = #{username}
+      </if>
+
+    </select>
+
+    <!-- 通过用户名查询用户ID -->
+    <select id="getAccountIDByUserName" resultType="java.lang.Integer">
+      SELECT id FROM account WHERE username = #{username}
+    </select>
+
+    <!-- 查询用户姓名 -->
+    <select id="getNameById" resultType="java.lang.String">
+        SELECT name FROM account WHERE id = #{id}
+    </select>
+
+    <!-- 通过用户名查询账号总数 -->
+    <select id="countByUsername" resultType="java.lang.Integer">
+      SELECT
+        count(id)
+      FROM
+        account
+      WHERE
+        is_delete = 0
+        AND username = #{username}
+      <if test="excludeId">
+        AND id != #{excludeId}
+      </if>
+    </select>
+
+    <!-- 根据手机号码查询账号总数 -->
+    <select id="countByPhone" resultType="java.lang.Integer">
+      SELECT
+        count(id)
+      FROM
+        account
+      WHERE
+        is_delete = 0
+        AND phone = #{phone}
+        <if test="excludeId != null">
+          AND id != #{excludeId}
+        </if>
+    </select>
+
+    <!-- 根据邮箱查询账号总数 -->
+    <select id="countByEmail" resultType="java.lang.Integer">
+      SELECT
+        count(id)
+      FROM
+        account
+      WHERE
+        is_delete = 0
+        AND email = #{email}
+        <if test="excludeId != null">
+          AND id != #{excludeId}
+        </if>
+    </select>
+
+  <!-- 根据账号ID查询用户名 -->
+  <select id="getUserNameById" resultType="java.lang.String">
+    SELECT username FROM account WHERE id = #{id}
+  </select>
+
+  <!-- 根据账号ID查询修改时间 -->
+  <select id="getUpdateTimeById" resultType="java.util.Date">
+    SELECT update_time FROM account WHERE id = #{id}
+  </select>
+
+  <!-- 获取账号列表 -->
+  <select id="getAccountList" resultMap="BaseResultMap">
+    SELECT
+        id,
+        username,
+        `name`,
+        phone,
+        email,
+        status,
+        is_delete,
+        create_time,
+        create_id,
+        update_time,
+        update_id
+    FROM
+        account
+    WHERE
+        is_delete = 0
+        <if test="username">
+            AND username LIKE #{username}
+        </if>
+        <if test="name">
+          AND name LIKE #{name}
+        </if>
+        <if test="phone">
+          AND phone LIKE #{phone}
+        </if>
+        <if test="email">
+           AND email LIKE #{email}
+        </if>
+        order by id desc
+  </select>
+
+  <!-- 获取账号列表 -->
+  <select id="getAccountListByRoleId" resultMap="BaseResultMap">
+    SELECT
+      DISTINCT
+      a.id,
+      a.username,
+      a.`name`,
+      a.phone,
+      a.email,
+      a.status,
+      a.is_delete,
+      a.create_time,
+      a.create_id,
+      a.update_time,
+      a.update_id
+    FROM
+      account a LEFT JOIN account_role ar ON a.id = ar.account_id
+    WHERE
+      a.is_delete = 0
+      <if test="username">
+        AND a.username LIKE #{username}
+      </if>
+      <if test="name">
+        AND a.name LIKE #{name}
+      </if>
+      <if test="phone">
+        AND a.phone LIKE #{phone}
+      </if>
+      <if test="email">
+        AND a.email LIKE #{email}
+      </if>
+      AND (
+         ar.role_id = #{roleId}
+        OR(
+            a.username = #{admin}
+        )
+      )
+      order by id desc
+  </select>
+
+  <!-- 通过账号Id查询密码 -->
+    <select id="getPasswordById" resultType="java.lang.String">
+      SELECT password FROM account WHERE id = #{id}
+    </select>
+
+  <!-- 根据账号id修改账号密码 -->
+  <update id="updatePasswordById">
+    UPDATE account SET password = #{password} where id = #{id}
+  </update>
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cheng.manage.dao.account.account.AccountRoleMapper">
+    <resultMap id="BaseResultMap" type="com.cheng.manage.entity.account.account.AccountRoleBO">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="account_id" property="accountId" jdbcType="INTEGER"/>
+        <result column="role_id" property="roleId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 删除账号拥有角色 -->
+    <delete id="deleteAccountRoleByAccountId">
+        DELETE FROM account_role WHERE account_id = #{accountId}
+    </delete>
+
+    <!-- 删除账号拥有角色 -->
+    <delete id="deleteAccountRoleByROleId">
+        DELETE FROM account_role WHERE role_id = #{roleId}
+    </delete>
+
+    <!-- 通过账号ID查询角色列表 -->
+    <select id="getRoleListByAccountId" resultType="com.cheng.manage.entity.account.role.RoleBO">
+      SELECT
+        r.id, r.`name`
+      FROM
+        account_role ar, role r
+      WHERE
+        ar.role_id = r.id
+        AND r.status = 1
+        AND ar.account_id = #{accountId}
+        order by r.display_order
+    </select>
+
+    <!-- 通过账号id查询角色Id列表 -->
+    <select id="getRoleIdsByAccountId" resultType="java.lang.Integer">
+        SELECT
+            ar.role_id
+        FROM
+            account_role ar, role r
+        WHERE
+            ar.role_id = r.id
+            AND r.status = 1
+            AND ar.account_id = #{accountId}
+    </select>
+</mapper>

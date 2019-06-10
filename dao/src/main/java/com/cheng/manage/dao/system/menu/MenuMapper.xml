@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cheng.manage.dao.system.menu.MenuMapper" >
+  <resultMap id="BaseResultMap" type="com.cheng.manage.entity.system.menu.MenuBO" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="display_order" property="displayOrder" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="has_children" property="hasChildren" jdbcType="BIT" />
+    <result column="has_permission" property="hasPermission" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="reserved_one" property="reservedOne" jdbcType="VARCHAR" />
+    <result column="reserved_two" property="reservedTwo" jdbcType="VARCHAR" />
+    <result column="reserved_three" property="reservedThree" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <!-- 查询菜单列表 -->
+  <select id="getMenuList" resultMap="BaseResultMap">
+    SELECT
+      id, name, url, parent_id, display_order, status, has_children, create_time, create_id, update_time, update_id
+    FROM
+      menu
+    WHERE
+      parent_id = #{parentId}
+      <if test="status != null">
+        AND status = #{status}
+      </if>
+      order by display_order
+  </select>
+
+  <!-- 查询菜单树列表 -->
+  <select id="getMenuTreeList" resultMap="BaseResultMap">
+      SELECT
+        id, name, parent_id, has_children
+      FROM
+        menu
+      WHERE
+        parent_id = #{parentId}
+        <if test="status != null">
+          AND status = #{status}
+        </if>
+        <if test="excludeId != 0">
+          AND id != #{excludeId}
+        </if>
+      order by display_order
+  </select>
+
+  <!--查询菜单总数 -->
+  <select id="getCountByUrl" resultType="int">
+    SELECT
+      count(id)
+    FROM
+      menu
+    WHERE
+      url = #{url}
+      <if test="excludeId != null">
+        AND id != #{excludeId}
+      </if>
+  </select>
+
+  <!-- 通过菜单id查询菜单名称 -->
+  <select id="getMenuNameByMenuID" resultType="java.lang.String">
+    SELECT name FROM menu WHERE id = #{id}
+  </select>
+
+  <!-- 通过父节点ID查询菜单总数 -->
+  <select id="getCountByParentId" resultType="int">
+    SELECT
+        count(id)
+    FROM
+        menu
+    WHERE
+        parent_id = #{parentId}
+    <if test="status != null">
+        AND status = #{status}
+    </if>
+  </select>
+
+  <!-- 通过父节点ID和名称查询菜单总数 -->
+  <select id="getCountByParentIdAndName" resultType="int">
+    SELECT
+      count(id)
+    FROM
+      menu
+    WHERE
+      parent_id = #{parentId}
+    AND name = #{name}
+    <if test="excludeId != null">
+      AND id != #{excludeId}
+    </if>
+  </select>
+
+  <!-- 通过菜单ID查询是否是存在菜单 -->
+  <select id="getHasChildrenByID" resultType="java.lang.Boolean">
+    SELECT has_children FROM menu WHERE id = #{id}
+  </select>
+
+  <!-- 查询菜单所有子菜单 -->
+  <select id="getChildMenuIds" resultType="java.lang.Integer">
+    select
+      id
+    from
+      menu
+    where
+      parent_id = #{menuId}
+    <if test="status != null">
+      AND status = #{status}
+    </if>
+  </select>
+
+  <!-- 通过菜单ID查询修改时间 -->
+  <select id="getUpdateTimeById" resultType="java.util.Date">
+    SELECT update_time FROM menu WHERE id = #{id}
+  </select>
+
+  <!-- 查询所有菜单Id -->
+  <select id="getAllMenuId" resultType="java.lang.Integer">
+    SELECT id FROM menu WHERE status = 1
+  </select>
+
+  <!-- 通过菜单Id查询菜单url -->
+  <select id="getUrlAndDisplayOrderById" resultMap="BaseResultMap">
+    SELECT url, display_order FROM menu WHERE id = #{id}
+  </select>
+
+    <!-- 通过菜单url当前菜单所有权限 -->
+    <select id="getMenuPermissionByMenuUrl" resultType="java.lang.String">
+        SELECT
+            p.url
+        FROM
+            menu m, permission p
+        WHERE m.id = p.menu_id
+        AND m.url = #{url}
+        AND p.status = 1
+    </select>
+
+
+</mapper>
