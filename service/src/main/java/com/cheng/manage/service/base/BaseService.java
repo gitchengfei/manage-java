@@ -493,9 +493,11 @@ public class BaseService {
             String sessionId = jedisUtil.get(sessionDb, getAccountTokenPre(requestSource, accountId));
             byte[] bytes = jedisUtil.get(sessionDb, (getAccountSessionKey(sessionId)).getBytes());
             Session oldSession = (Session) SerializationUtils.deserialize(bytes);
-            oldSession.setAttribute(LoginConstant.LOGIN_MSG, JsonUtils.objectToJson(resultEnum));
-            oldSession.setAttribute(LoginConstant.VALID_SESSION, false);
-            jedisUtil.set(sessionDb, (getAccountSessionKey(sessionId)).getBytes(), SerializationUtils.serialize(oldSession));
+            if (oldSession != null){
+                oldSession.setAttribute(LoginConstant.LOGIN_MSG, JsonUtils.objectToJson(resultEnum));
+                oldSession.setAttribute(LoginConstant.VALID_SESSION, false);
+                jedisUtil.set(sessionDb, (getAccountSessionKey(sessionId)).getBytes(), SerializationUtils.serialize(oldSession));
+            }
         }
     }
 
