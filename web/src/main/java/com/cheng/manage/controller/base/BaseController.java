@@ -1,16 +1,11 @@
 package com.cheng.manage.controller.base;
 
-import com.cheng.manage.common.aliyun.AliyunOSSClientUtil;
 import com.cheng.manage.common.exception.MyException;
 import com.cheng.manage.common.json.JsonUtils;
 import com.cheng.manage.common.result.Result;
 import com.cheng.manage.common.result.ResultEnum;
-import com.cheng.manage.entity.account.account.AccountBO;
-import com.cheng.manage.service.account.account.AccountService;
-import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.servlet.ServletOutputStream;
@@ -18,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.io.PrintWriter;
 
-import static com.sun.deploy.perf.DeployPerfUtil.write;
 
 
 /**
