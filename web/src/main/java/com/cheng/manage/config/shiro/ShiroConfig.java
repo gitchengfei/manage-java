@@ -76,8 +76,6 @@ public class ShiroConfig {
         //登陆
         filterChainDefinitionMap.put("/system/login", "anon");
         filterChainDefinitionMap.put("/system/login/logout", "anon");
-        filterChainDefinitionMap.put("/error", "anon");
-        filterChainDefinitionMap.put("/file/test", "anon");
         //authc:所有url必须通过认证才能访问，anon:所有url都可以匿名访问
         filterChainDefinitionMap.put("/**", "authc");
         shiroFilter.setFilterChainDefinitionMap(filterChainDefinitionMap);
