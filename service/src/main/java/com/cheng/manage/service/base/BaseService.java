@@ -2,11 +2,11 @@ package com.cheng.manage.service.base;
 
 import com.cheng.manage.common.aliyun.AliyunOSSClientUtil;
 import com.cheng.manage.common.exception.MyException;
+import com.cheng.manage.common.json.JsonUtils;
 import com.cheng.manage.common.redis.JedisUtil;
 import com.cheng.manage.common.result.Result;
 import com.cheng.manage.common.result.ResultEnum;
 import com.cheng.manage.common.util.RegexUtils;
-import com.cheng.manage.common.json.JsonUtils;
 import com.cheng.manage.constant.app.ApplicationConstant;
 import com.cheng.manage.constant.app.account.role.RoleConstant;
 import com.cheng.manage.constant.app.system.login.LoginConstant;
@@ -29,7 +29,6 @@ import com.cheng.manage.entity.file.UseFileBO;
 import com.cheng.manage.entity.system.db.log.DbLogBO;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -636,7 +635,6 @@ public class BaseService {
 
         //删除引用记录
         int i = useFileMapper.deleteByFileIdAndTableNameAndColumnId(fileId, tableName, columnId);
-        checkDbDelete(i);
 
         // 添加至文件未使用记录,等待系统自动删除,避免发生异常,事务回滚,文件已删除
         addUnusedFile(fileId, null);
