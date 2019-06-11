@@ -41,7 +41,7 @@ public class MyAuthenticationFilter extends FormAuthenticationFilter {
     private JedisUtil jedisUtil;
 
     @Value("${spring.redis.session.db}")
-    protected int sessionDb;
+    private int sessionDb;
 
     @Value("${app.pc.key}")
     private String appPcKey;
@@ -116,7 +116,7 @@ public class MyAuthenticationFilter extends FormAuthenticationFilter {
     }
 
     @Override
-    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
+  protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletResponse res = (HttpServletResponse) response;
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setStatus(HttpServletResponse.SC_OK);

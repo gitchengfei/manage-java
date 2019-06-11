@@ -1,75 +1,53 @@
 package com.cheng.manage.entity.system.db.log;
 
+import com.cheng.manage.entity.base.BaseBO;
+
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
 @Table(name = "db_log")
-public class DbLogBO {
-    /**
-     * 数据库操作日志表主键
-     */
-    @Id
-    protected Long id;
+public class DbLogBO  extends BaseBO {
 
     /**
      * 操作人
      */
     @Column(name = "account_id")
-    protected Integer accountId;
+    private Integer accountId;
 
     /**
      * 操作时间
      */
     @Column(name = "create_time")
-    protected Date createTime;
+    private Date createTime;
 
     /**
      * 数据字典中数据库操作日志类型
      */
-    protected String type;
+    private String type;
 
     /**
      * 操作内容
      */
-    protected String log;
+    private String log;
 
     /**
      * 预留字段1
      */
     @Column(name = "reserved_one")
-    protected String reservedOne;
+    private String reservedOne;
 
     /**
      * 预留字段2
      */
     @Column(name = "reserved_two")
-    protected String reservedTwo;
+    private String reservedTwo;
 
     /**
      * 预留字段3
      */
     @Column(name = "reserved_three")
-    protected String reservedThree;
-
-    /**
-     * 获取数据库操作日志表主键
-     *
-     * @return id - 数据库操作日志表主键
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * 设置数据库操作日志表主键
-     *
-     * @param id 数据库操作日志表主键
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String reservedThree;
 
     /**
      * 获取操作人
@@ -200,7 +178,7 @@ public class DbLogBO {
     @Override
     public String toString() {
         return "DbLogBO{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", accountId=" + accountId +
                 ", createTime=" + createTime +
                 ", type='" + type + '\'' +

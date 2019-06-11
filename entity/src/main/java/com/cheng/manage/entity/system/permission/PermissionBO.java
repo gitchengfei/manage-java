@@ -1,7 +1,8 @@
 package com.cheng.manage.entity.system.permission;
 
+import com.cheng.manage.entity.base.BaseBO;
+
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 /**
@@ -10,104 +11,81 @@ import java.util.Date;
  * @Description:  数据库权限表对应实体类
  */
 @Table(name = "permission")
-public class PermissionBO {
-    /**
-     * 自增长主键
-     */
-    @Id
-    protected Integer id;
+public class PermissionBO extends BaseBO {
 
     /**
      * 权限所属菜单
      */
     @Column(name = "menu_id")
-    protected Integer menuId;
+    private Integer menuId;
 
     /**
      * 权限名
      */
-    protected String name;
+    private String name;
 
     /**
      * 该权限绑定的url
      */
-    protected String url;
+    private String url;
 
     /**
      * 排序码
      */
     @Column(name = "display_order")
-    protected Integer displayOrder;
+    private Integer displayOrder;
 
     /**
      * 状态:启用/禁用
      */
-    protected Boolean status;
+    private Boolean status;
 
     /**
      * 备注
      */
-    protected String remark;
+    private String remark;
 
     /**
      * 创建人ID
      */
     @Column(name = "create_id")
-    protected Integer createId;
+    private Integer createId;
 
     /**
      * 创建时间
      */
     @Column(name = "create_time")
-    protected Date createTime;
+    private Date createTime;
 
     /**
      * 修改人ID
      */
     @Column(name = "update_id")
-    protected Integer updateId;
+    private Integer updateId;
 
     /**
      * 修改时间
      */
     @Column(name = "update_time")
-    protected Date updateTime;
+    private Date updateTime;
 
     /**
      * 预留字段1
      */
     @Column(name = "reserved_one")
-    protected String reservedOne;
+    private String reservedOne;
 
     /**
      * 预留字段2
      */
     @Column(name = "reserved_two")
-    protected String reservedTwo;
+    private String reservedTwo;
 
     /**
      * 预留字段3
      */
     @Column(name = "reserved_three")
-    protected String reservedThree;
-
-    /**
-     * 获取自增长主键
-     *
-     * @return ID - 自增长主键
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * 设置自增长主键
-     *
-     * @param id 自增长主键
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private String reservedThree;
 
     /**
      * 获取权限所属菜单
@@ -346,7 +324,7 @@ public class PermissionBO {
     @Override
     public String toString() {
         return "PermissionBO{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", menuId=" + menuId +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +

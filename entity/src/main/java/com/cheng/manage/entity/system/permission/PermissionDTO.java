@@ -18,20 +18,20 @@ public class PermissionDTO extends PermissionBO {
 
     public PermissionDTO(PermissionBO permission) {
         super();
-        this.id = permission.getId();
-        this.menuId = permission.getMenuId();
-        this.name = permission.getName();
-        this.url = permission.getUrl();
-        this.displayOrder = permission.getDisplayOrder();
-        this.status = permission.getStatus();
-        this.remark = permission.getRemark();
-        this.createId = permission.getCreateId();
-        this.createTime = permission.getCreateTime();
-        this.updateId = permission.getUpdateId();
-        this.updateTime = permission.getUpdateTime();
-        this.reservedOne = permission.getReservedOne();
-        this.reservedTwo = permission.getReservedTwo();
-        this.reservedThree = permission.getReservedThree();
+        setId(permission.getId());
+        setMenuId(permission.getMenuId());
+        setName(permission.getName());
+        setUrl(permission.getUrl());
+        setDisplayOrder(permission.getDisplayOrder());
+        setStatus(permission.getStatus());
+        setRemark(permission.getRemark());
+        setCreateId(permission.getCreateId());
+        setCreateTime(permission.getCreateTime());
+        setUpdateId(permission.getUpdateId());
+        setUpdateTime(permission.getUpdateTime());
+        setReservedOne(permission.getReservedOne());
+        setReservedTwo(permission.getReservedTwo());
+        setReservedThree(permission.getReservedThree());
     }
 
     public String getCreateName() {
@@ -54,20 +54,20 @@ public class PermissionDTO extends PermissionBO {
     public String toString() {
         return "PermissionDTO{" +
                 "updateName='" + updateName + '\'' +
-                ", id=" + id +
-                ", menuId=" + menuId +
-                ", url='" + url + '\'' +
-                ", name='" + name + '\'' +
-                ", displayOrder=" + displayOrder +
-                ", status=" + status +
-                ", remark='" + remark + '\'' +
-                ", createId=" + createId +
-                ", createTime=" + createTime +
-                ", updateId=" + updateId +
-                ", updateTime=" + updateTime +
-                ", reservedOne='" + reservedOne + '\'' +
-                ", reservedTwo='" + reservedTwo + '\'' +
-                ", reservedThree='" + reservedThree + '\'' +
+                ", id=" + getId() +
+                ", menuId=" + getMenuId() +
+                ", url='" + getUpdateName() + '\'' +
+                ", name='" + getName() + '\'' +
+                ", displayOrder=" + getDisplayOrder() +
+                ", status=" + getStatus() +
+                ", remark='" + getRemark() + '\'' +
+                ", createId=" + getCreateId() +
+                ", createTime=" + getCreateTime() +
+                ", updateId=" + getUpdateId() +
+                ", updateTime=" + getUpdateTime() +
+                ", reservedOne='" + getReservedOne() + '\'' +
+                ", reservedTwo='" + getReservedTwo() + '\'' +
+                ", reservedThree='" + getReservedThree()+ '\'' +
                 '}';
     }
 }

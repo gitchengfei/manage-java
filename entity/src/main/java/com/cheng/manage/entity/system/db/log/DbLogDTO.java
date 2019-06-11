@@ -42,14 +42,14 @@ public class DbLogDTO extends DbLogBO{
                 "accountName='" + accountName + '\'' +
                 ", typeName='" + typeName + '\'' +
                 ", log='" + log + '\'' +
-                ", id=" + id +
-                ", accountId=" + accountId +
-                ", createTime=" + createTime +
-                ", type='" + type + '\'' +
+                ", id=" + getId() +
+                ", accountId=" + getAccountId() +
+                ", createTime=" + getCreateTime() +
+                ", type='" + getType() + '\'' +
                 ", log='" + log + '\'' +
-                ", reservedOne='" + reservedOne + '\'' +
-                ", reservedTwo='" + reservedTwo + '\'' +
-                ", reservedThree='" + reservedThree + '\'' +
+                ", reservedOne='" + getReservedOne() + '\'' +
+                ", reservedTwo='" + getReservedTwo() + '\'' +
+                ", reservedThree='" + getReservedThree() + '\'' +
                 '}';
     }
 }

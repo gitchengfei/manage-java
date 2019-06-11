@@ -1,9 +1,9 @@
 package com.cheng.manage.service.system.db.log.impl;
 
+import com.cheng.manage.common.date.DateUtils;
 import com.cheng.manage.common.result.Result;
 import com.cheng.manage.common.result.ResultEnum;
-import com.cheng.manage.common.date.DateUtils;
-import com.cheng.manage.constant.app.ApplicationConstant;
+import com.cheng.manage.constant.app.system.db.log.DBLogConstant;
 import com.cheng.manage.dao.system.dictionary.DictionaryMapper;
 import com.cheng.manage.entity.system.db.log.DbLogDTO;
 import com.cheng.manage.service.system.base.SystemBaseService;
@@ -17,9 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Description : 数据库操作日志接口实现类
@@ -60,9 +58,14 @@ public class DbLogServiceImpl extends SystemBaseService implements DbLogService 
         PageHelper.startPage(page, pageSize);
         List<DbLogDTO> list = dbLogMapper.getDbLogList(type, name, startTime, endTime);
         PageInfo<DbLogDTO> info = new PageInfo<>(list);
-
+        List<DbLogDTO> rows = info.getList();
+        for (DbLogDTO dbLogDTO : rows) {
+            if (DBLogConstant.SYSTEM_ACCOUNT_ID.equals(dbLogDTO.getAccountId())) {
+                dbLogDTO.setAccountName(DBLogConstant.SYSTEM_ACCOUNT_NAME);
+            }
+        }
         //返回
-        return getResult(info);
+        return getResult(rows, info.getTotal());
     }
 
     @Override

@@ -13,20 +13,20 @@ public class DictionaryDTO extends DictionaryBO{
 
     public DictionaryDTO(DictionaryBO dictionary) {
         super();
-        this.id = dictionary.getId();
-        this.name = dictionary.getName();
-        this.key = dictionary.getKey();
-        this.value = dictionary.getValue();
-        this.displayOrder = dictionary.getDisplayOrder();
-        this.parentId = dictionary.getParentId();
-        this.status = dictionary.getStatus();
-        this.createTime = dictionary.getCreateTime();
-        this.createId = dictionary.getCreateId();
-        this.updateTime = dictionary.getUpdateTime();
-        this.updateId = dictionary.getUpdateId();
-        this.reservedOne = dictionary.getReservedOne();
-        this.reservedTwo = dictionary.getReservedTwo();
-        this.reservedThree = dictionary.getReservedThree();
+        setId(dictionary.getId());
+        setName(dictionary.getName());
+        setKey(dictionary.getKey());
+        setValue(dictionary.getValue());
+        setDisplayOrder(dictionary.getDisplayOrder());
+        setParentId(dictionary.getParentId());
+        setStatus(dictionary.getStatus());
+        setCreateTime(dictionary.getCreateTime());
+        setCreateId(dictionary.getCreateId());
+        setUpdateTime(dictionary.getUpdateTime());
+        setUpdateId(dictionary.getUpdateId());
+        setReservedOne(dictionary.getReservedOne());
+        setReservedTwo(dictionary.getReservedTwo());
+        setReservedThree(dictionary.getReservedThree());
     }
 
     public String getCreateName() {
@@ -50,20 +50,20 @@ public class DictionaryDTO extends DictionaryBO{
         return "DictionaryDTO{" +
                 "createName='" + createName + '\'' +
                 ", updateName='" + updateName + '\'' +
-                ", id=" + id +
-                ", name='" + name + '\'' +
-                ", key='" + key + '\'' +
-                ", value='" + value + '\'' +
-                ", displayOrder=" + displayOrder +
-                ", parentId=" + parentId +
-                ", status=" + status +
-                ", createTime=" + createTime +
-                ", createId=" + createId +
-                ", updateTime=" + updateTime +
-                ", updateId=" + updateId +
-                ", reservedOne='" + reservedOne + '\'' +
-                ", reservedTwo='" + reservedTwo + '\'' +
-                ", reservedThree='" + reservedThree + '\'' +
+                ", id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", key='" + getKey() + '\'' +
+                ", value='" + getValue() + '\'' +
+                ", displayOrder=" + getDisplayOrder() +
+                ", parentId=" + getParentId() +
+                ", status=" + getStatus() +
+                ", createTime=" + getCreateTime() +
+                ", createId=" + getCreateId() +
+                ", updateTime=" + getUpdateTime() +
+                ", updateId=" + getUpdateId() +
+                ", reservedOne='" + getReservedOne() + '\'' +
+                ", reservedTwo='" + getReservedTwo() + '\'' +
+                ", reservedThree='" + getReservedThree() + '\'' +
                 '}';
     }
 }

@@ -22,18 +22,18 @@ public class RoleDTO extends RoleBO{
     }
 
     public RoleDTO(RoleBO roleBO) {
-        this.id = roleBO.getId();
-        this.name = roleBO.getName();
-        this.displayOrder = roleBO.getDisplayOrder();
-        this.status = roleBO.getStatus();
-        this.remark = roleBO.getRemark();
-        this.createTime = roleBO.getCreateTime();
-        this.createId = roleBO.getCreateId();
-        this.updateTime = roleBO.getUpdateTime();
-        this.updateId = roleBO.getUpdateId();
-        this.reservedOne = roleBO.getReservedOne();
-        this.reservedTwo = roleBO.getReservedTwo();
-        this.reservedThree = roleBO.getReservedThree();
+        setId(roleBO.getId());
+        setName(roleBO.getName());
+        setDisplayOrder(roleBO.getDisplayOrder());
+        setStatus(roleBO.getStatus());
+        setRemark(roleBO.getRemark());
+        setCreateTime(roleBO.getCreateTime());
+        setCreateId(roleBO.getCreateId());
+        setUpdateTime(roleBO.getUpdateTime());
+        setUpdateId(roleBO.getUpdateId());
+        setReservedOne(roleBO.getReservedOne());
+        setReservedTwo(roleBO.getReservedTwo());
+        setReservedThree(roleBO.getReservedThree());
     }
 
     @Override
@@ -41,17 +41,17 @@ public class RoleDTO extends RoleBO{
         return "RoleDTO{" +
                 "createName='" + createName + '\'' +
                 ", updateName='" + updateName + '\'' +
-                ", id=" + id +
-                ", name='" + name + '\'' +
-                ", status=" + status +
-                ", remark='" + remark + '\'' +
-                ", createTime=" + createTime +
-                ", createId=" + createId +
-                ", updateTime=" + updateTime +
-                ", updateId=" + updateId +
-                ", reservedOne='" + reservedOne + '\'' +
-                ", reservedTwo='" + reservedTwo + '\'' +
-                ", reservedThree='" + reservedThree + '\'' +
+                ", id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", status=" + getStatus() +
+                ", remark='" + getRemark() + '\'' +
+                ", createTime=" + getCreateTime() +
+                ", createId=" + getCreateId() +
+                ", updateTime=" + getUpdateTime() +
+                ", updateId=" + getUpdateId() +
+                ", reservedOne='" + getReservedOne() + '\'' +
+                ", reservedTwo='" + getReservedTwo() + '\'' +
+                ", reservedThree='" + getReservedThree() + '\'' +
                 '}';
     }
 

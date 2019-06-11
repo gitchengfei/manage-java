@@ -1,7 +1,8 @@
 package com.cheng.manage.entity.account.role;
 
+import com.cheng.manage.entity.base.BaseBO;
+
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 /**
@@ -10,81 +11,75 @@ import java.util.Date;
  * @Description:  数据库角色表对应实体类
  */
 @Table(name = "role")
-public class RoleBO {
-
-    /**
-     * 角色表主键
-     */
-    @Id
-    protected Integer id;
+public class RoleBO extends BaseBO {
 
     /**
      * 角色名
      */
-    protected String name;
+    private String name;
 
     /**
      * 排序码
      */
     @Column(name = "display_order")
-    protected Integer displayOrder;
+    private Integer displayOrder;
 
     /**
      * 状态
      */
-    protected Boolean status;
+    private Boolean status;
 
     /**
      * 备注
      */
-    protected String remark;
+    private String remark;
 
     /**
      * 创建时间
      */
     @Column(name = "create_time")
-    protected Date createTime;
+    private Date createTime;
 
     /**
      * 创建人ID
      */
     @Column(name = "create_id")
-    protected Integer createId;
+    private Integer createId;
 
     /**
      * 修改时间
      */
     @Column(name = "update_time")
-    protected Date updateTime;
+    private Date updateTime;
 
     /**
      * 修改人ID
      */
     @Column(name = "update_id")
-    protected Integer updateId;
+    private Integer updateId;
 
     /**
      * 预留字段1
      */
     @Column(name = "reserved_one")
-    protected String reservedOne;
+    private String reservedOne;
 
     /**
      * 预留字段2
      */
     @Column(name = "reserved_two")
-    protected String reservedTwo;
+    private String reservedTwo;
 
     /**
      * 预留字段3
      */
     @Column(name = "reserved_three")
-    protected String reservedThree;
+    private String reservedThree;
 
     @Override
     public String toString() {
         return "RoleBO{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", name='" + name + '\'' +
                 ", displayOrder='" + displayOrder + '\'' +
                 ", status=" + status +
@@ -96,24 +91,6 @@ public class RoleBO {
                 ", reservedTwo='" + reservedTwo + '\'' +
                 ", reservedThree='" + reservedThree + '\'' +
                 '}';
-    }
-
-    /**
-     * 获取角色表主键
-     *
-     * @return id - 角色表主键
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * 设置角色表主键
-     *
-     * @param id 角色表主键
-     */
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     /**

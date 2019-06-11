@@ -38,11 +38,6 @@ public class AccountServiceImpl extends AccountBaseService implements AccountSer
      */
     private static final String DB_LOG_TYPE = "SYSTEM_DB_LOG_TYPE_ACCOUNT";
 
-
-    @Autowired
-    protected AliyunOSSClientUtil aliyunOSSClientUtil;
-
-
     @Override
     public Result getAccountList(String username, String name, String phone, String email, String roleId, Integer page, Integer pageSize) {
 
