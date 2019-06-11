@@ -12,7 +12,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Id;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.util.Date;
@@ -24,7 +23,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/file")
-@Api(tags = "FileController", description = "文件模块")
+@Api(tags = "file.FileController", description = "文件模块")
 public class FileController extends BaseController {
 
     @Autowired
