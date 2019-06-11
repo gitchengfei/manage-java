@@ -447,8 +447,8 @@ public class BaseService {
      * 作者: cheng fei
      * 创建日期: 2019/6/9 15:10
      * 描述 : 获取账号session token key
-     * @param requestSource
-     * @param accountId
+     * @param requestSource 请求来源
+     * @param accountId 账号Id
      * @return
      */
     protected String getAccountTokenPre (String requestSource, Integer accountId) {
@@ -459,8 +459,7 @@ public class BaseService {
      * 作者: cheng fei
      * 创建日期: 2019/6/9 15:08
      * 描述 :
-     * @param requestSource
-     * @param accountId
+     * @param sessionId sessionId
      * @return
      */
     protected String  getAccountSessionKey (String sessionId){
@@ -514,7 +513,7 @@ public class BaseService {
         logger.debug("获取角色id列表, username=【 {} 】", username);
         //reids缓存中获取
         try {
-            String json = jedisUtil.get(appCacheDb, RoleConstant.ACCOUNT_ROLES_KEY_PRE + username, sessionExpire);
+            String json = jedisUtil.get(appCacheDb, RoleConstant.ACCOUNT_ROLES_KEY_PRE + username, sessionExpire / 1000);
             if (StringUtils.isNotBlank(json)) {
                 return JsonUtils.jsonToList(json, RoleBO.class);
             }
@@ -542,7 +541,7 @@ public class BaseService {
 
         //存入redis缓存
         try {
-            jedisUtil.set(appCacheDb, RoleConstant.ACCOUNT_ROLES_KEY_PRE + username, JsonUtils.objectToJson(roles), sessionExpire);
+            jedisUtil.set(appCacheDb, RoleConstant.ACCOUNT_ROLES_KEY_PRE + username, JsonUtils.objectToJson(roles), sessionExpire / 1000);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("添加redis缓存异常:" + e.getMessage(), e);
@@ -566,7 +565,7 @@ public class BaseService {
         Set<String> permissions = new HashSet<>();
         //查询reids缓存
         try {
-            String json = jedisUtil.get(appCacheDb, PermissionConstant.ACCOUNT_PERMISSIONS_KEY_PRE + username, sessionExpire);
+            String json = jedisUtil.get(appCacheDb, PermissionConstant.ACCOUNT_PERMISSIONS_KEY_PRE + username, sessionExpire / 1000);
             if (StringUtils.isNotBlank(json)) {
                 permissions.addAll(JsonUtils.jsonToList(json, String.class));
                 return permissions;
@@ -587,7 +586,7 @@ public class BaseService {
 
         //添加redis缓存
         try {
-            jedisUtil.set(appCacheDb, PermissionConstant.ACCOUNT_PERMISSIONS_KEY_PRE + username, JsonUtils.objectToJson(permissions), sessionExpire);
+            jedisUtil.set(appCacheDb, PermissionConstant.ACCOUNT_PERMISSIONS_KEY_PRE + username, JsonUtils.objectToJson(permissions), sessionExpire / 1000);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("获取redis缓存异常:" + e.getMessage(), e);
@@ -651,12 +650,16 @@ public class BaseService {
      * @param date   文件上传时间/文件未使用时间
      */
     protected void addUnusedFile(Integer fileId, Date date) {
-        UnusedFileBO unusedFileBO = new UnusedFileBO();
-        unusedFileBO.setFileId(fileId);
-        unusedFileBO.setUploadTime(date == null ? new Date() : date);
 
-        int i = unusedFileMapper.insertSelective(unusedFileBO);
-        checkDbInsert(i);
+        int i = unusedFileMapper.countByFileId(fileId);
+        if (i < 1) {
+            UnusedFileBO unusedFileBO = new UnusedFileBO();
+            unusedFileBO.setFileId(fileId);
+            unusedFileBO.setUploadTime(date == null ? new Date() : date);
+
+            i = unusedFileMapper.insertSelective(unusedFileBO);
+            checkDbInsert(i);
+        }
     }
 
     /**
