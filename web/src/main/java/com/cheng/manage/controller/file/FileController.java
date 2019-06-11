@@ -83,7 +83,7 @@ public class FileController extends BaseController {
 
     @RequiresPermissions("/file/download")
     @GetMapping("/download")
-    @ApiOperation(value = "下载文件", httpMethod = "POST", produces = "application/json")
+    @ApiOperation(value = "下载文件", httpMethod = "GET", produces = "application/json")
     public Result downloadFile (
             @ApiParam(value = "文件Id", required = true) @RequestParam(required = true) Integer fileId,
             @ApiParam(hidden = true) HttpServletResponse response
