@@ -1,46 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.cheng.manage.dao.system.db.log.DbLogMapper" >
-  <resultMap id="BaseResultMap" type="com.cheng.manage.entity.system.db.log.DbLogBO" >
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <result column="id" property="id" jdbcType="BIGINT" />
-    <result column="account_id" property="accountId" jdbcType="INTEGER" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="type" property="type" jdbcType="VARCHAR" />
-    <result column="log" property="log" jdbcType="VARCHAR" />
-    <result column="reserved_one" property="reservedOne" jdbcType="VARCHAR" />
-    <result column="reserved_two" property="reservedTwo" jdbcType="VARCHAR" />
-    <result column="reserved_three" property="reservedThree" jdbcType="VARCHAR" />
-  </resultMap>
+<mapper namespace="com.cheng.manage.dao.system.db.log.DbLogMapper">
+    <resultMap id="BaseResultMap" type="com.cheng.manage.entity.system.db.log.DbLogBO">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="account_id" property="accountId" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="log" property="log" jdbcType="VARCHAR"/>
+        <result column="reserved_one" property="reservedOne" jdbcType="VARCHAR"/>
+        <result column="reserved_two" property="reservedTwo" jdbcType="VARCHAR"/>
+        <result column="reserved_three" property="reservedThree" jdbcType="VARCHAR"/>
+    </resultMap>
 
     <!-- 查询数据库操作日志列表 -->
     <select id="getDbLogList" resultType="com.cheng.manage.entity.system.db.log.DbLogDTO">
-      SELECT
-        a.name AS accountName, d.name AS typeName, dl.create_time AS createTime, dl.log
-      FROM
-        db_log dl, account a, dictionary d
-      WHERE
-        dl.account_id = a.id
-        AND dl.type = d.code
-        <if test="type != null">
-          AND dl.`type` = #{type}
-        </if>
-        <if test="startTime != null">
-            <![CDATA[ AND dl.create_time >= #{startTime}]]>
-        </if>
-        <if test="endTime != null">
-            <![CDATA[ AND dl.create_time <= #{endTime}]]>
-        </if>
-        <if test="name != null">
-          AND a.`name` LIKE #{name}
-        </if>
-      ORDER BY dl.id DESC
+        SELECT
+            dl.account_id AS accountId, a.name AS accountName, d.name AS typeName, dl.create_time AS createTime, dl.log
+        FROM
+            db_log dl LEFT JOIN account a ON dl.account_id = a.id
+            LEFT JOIN dictionary d ON dl.type = d.code
+        <where>
+            <trim prefixOverrides="AND">
+                <if test="type != null">
+                    AND dl.`type` = #{type}
+                </if>
+                <if test="startTime != null">
+                    <![CDATA[ AND dl.create_time >= #{startTime}]]>
+                </if>
+                <if test="endTime != null">
+                    <![CDATA[ AND dl.create_time <= #{endTime}]]>
+                </if>
+                <if test="name != null">
+                    AND a.`name` LIKE #{name}
+                </if>
+            </trim>
+        </where>
+        ORDER BY dl.id DESC
     </select>
 
     <!-- 删除数据库操作日志 -->
     <delete id="deleteDdLog">
-      <![CDATA[ DELETE FROM db_log WHERE create_time <= #{beforeDate} ]]>
+      <![CDATA[
+         DELETE FROM db_log WHERE create_time <= #{beforeDate}
+        ]]>
     </delete>
 </mapper>
