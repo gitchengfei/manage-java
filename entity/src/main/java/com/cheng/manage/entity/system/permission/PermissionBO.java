@@ -4,7 +4,6 @@ import com.cheng.manage.entity.base.BaseBO;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
-import java.util.Date;
 /**
  * @Author: cheng fei
  * @Date: 2019/4/21 19:01
@@ -44,30 +43,6 @@ public class PermissionBO extends BaseBO {
      * 备注
      */
     private String remark;
-
-    /**
-     * 创建人ID
-     */
-    @Column(name = "create_id")
-    private Integer createId;
-
-    /**
-     * 创建时间
-     */
-    @Column(name = "create_time")
-    private Date createTime;
-
-    /**
-     * 修改人ID
-     */
-    @Column(name = "update_id")
-    private Integer updateId;
-
-    /**
-     * 修改时间
-     */
-    @Column(name = "update_time")
-    private Date updateTime;
 
     /**
      * 预留字段1
@@ -196,78 +171,6 @@ public class PermissionBO extends BaseBO {
     }
 
     /**
-     * 获取创建人ID
-     *
-     * @return create_id - 创建人ID
-     */
-    public Integer getCreateId() {
-        return createId;
-    }
-
-    /**
-     * 设置创建人ID
-     *
-     * @param createId 创建人ID
-     */
-    public void setCreateId(Integer createId) {
-        this.createId = createId;
-    }
-
-    /**
-     * 获取创建时间
-     *
-     * @return create_time - 创建时间
-     */
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    /**
-     * 设置创建时间
-     *
-     * @param createTime 创建时间
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    /**
-     * 获取修改人ID
-     *
-     * @return update_id - 修改人ID
-     */
-    public Integer getUpdateId() {
-        return updateId;
-    }
-
-    /**
-     * 设置修改人ID
-     *
-     * @param updateId 修改人ID
-     */
-    public void setUpdateId(Integer updateId) {
-        this.updateId = updateId;
-    }
-
-    /**
-     * 获取修改时间
-     *
-     * @return update_time - 修改时间
-     */
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    /**
-     * 设置修改时间
-     *
-     * @param updateTime 修改时间
-     */
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    /**
      * 获取预留字段1
      *
      * @return reserved_one - 预留字段1
@@ -331,10 +234,10 @@ public class PermissionBO extends BaseBO {
                 ", displayOrder=" + displayOrder +
                 ", status=" + status +
                 ", remark='" + remark + '\'' +
-                ", createId=" + createId +
-                ", createTime=" + createTime +
-                ", updateId=" + updateId +
-                ", updateTime=" + updateTime +
+                ", createId=" + getCreateId() +
+                ", createTime=" + getCreateTime() +
+                ", updateId=" + getUpdateId() +
+                ", updateTime=" + getUpdateTime() +
                 ", reservedOne='" + reservedOne + '\'' +
                 ", reservedTwo='" + reservedTwo + '\'' +
                 ", reservedThree='" + reservedThree + '\'' +

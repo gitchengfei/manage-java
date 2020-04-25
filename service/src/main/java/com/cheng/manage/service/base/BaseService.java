@@ -24,6 +24,7 @@ import com.cheng.manage.dao.system.permission.PermissionMapper;
 import com.cheng.manage.entity.account.account.AccountBO;
 import com.cheng.manage.entity.account.account.AccountInfo;
 import com.cheng.manage.entity.account.role.RoleBO;
+import com.cheng.manage.entity.base.BaseBO;
 import com.cheng.manage.entity.file.UnusedFileBO;
 import com.cheng.manage.entity.file.UseFileBO;
 import com.cheng.manage.entity.system.db.log.DbLogBO;
@@ -38,6 +39,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.SerializationUtils;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -100,6 +103,8 @@ public class BaseService {
     @Value("${app.cache.expire}")
     protected int appCacheExpire;
 
+    private AccountInfo loginAccountInfo;
+
     /**
      * 获取当前已登录用户所有信息
      *
@@ -109,6 +114,36 @@ public class BaseService {
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
         return JsonUtils.jsonToPojo((String) session.getAttribute(LoginConstant.ACCOUNT_INFO), AccountInfo.class);
+    }
+
+    /**
+     * 作者: cheng fei
+     * 创建日期: 2020/2/2 19:01
+     * 描述 : 设置新增信息
+     *
+     * @param baseBO
+     */
+    protected void setCreateInfo(BaseBO baseBO) {
+        if (null == this.loginAccountInfo) {
+            this.loginAccountInfo = getLoginAccountInfo();
+        }
+        baseBO.setCreateId(this.loginAccountInfo.getAccount().getId());
+        baseBO.setCreateTime(new Date());
+    }
+
+    /**
+     * 作者: cheng fei
+     * 创建日期: 2020/2/2 19:03
+     * 描述 : 设置修改信息
+     *
+     * @param baseBO
+     */
+    protected void setUpdateInfo(BaseBO baseBO) {
+        if (null == this.loginAccountInfo) {
+            this.loginAccountInfo = getLoginAccountInfo();
+        }
+        baseBO.setUpdateId(this.loginAccountInfo.getAccount().getId());
+        baseBO.setUpdateTime(new Date());
     }
 
     /**
@@ -194,6 +229,20 @@ public class BaseService {
         dbLog.setCreateTime(new Date());
         int i = dbLogMapper.insertSelective(dbLog);
         checkDbInsert(i);
+    }
+
+    /**
+     * 作者: cheng fei
+     * 创建日期: 2019/3/26 1:28
+     * 描述 : 插入数据库操作日志
+     *
+     * @param log 日志
+     */
+    protected void saveDBLog(String log, String type) {
+        if (null == this.loginAccountInfo) {
+            this.loginAccountInfo = getLoginAccountInfo();
+        }
+        saveDBLog(this.loginAccountInfo.getAccount().getId(), log, type);
     }
 
     /**
@@ -329,6 +378,65 @@ public class BaseService {
 
     /**
      * 作者: cheng fei
+     * 创建日期: 2020/2/2 19:17
+     * 描述 : 判断2个object是否一样
+     *
+     * @param object1
+     * @param object2
+     * @return
+     */
+    protected boolean equalsObject(Object object1, Object object2) {
+        try {
+            Class<?> clazz = object1.getClass();
+            if (!clazz.isAssignableFrom(object2.getClass())) {
+                return false;
+            }
+            Field[] fields = clazz.getDeclaredFields();
+            List<Field> baseFields = Arrays.asList(BaseBO.class.getDeclaredFields());
+            for (Field field : fields) {
+                if (baseFields.contains(field)) {
+                    continue;
+                }
+                Object fieldValue1 = getFieldValueByName(field.getName(), object1);
+                Object fieldValue2 = getFieldValueByName(field.getName(), object2);
+                if (null == fieldValue1 && null == fieldValue2) {
+                    continue;
+                } else if (null != fieldValue1 && null != fieldValue2) {
+                    if (!fieldValue1.equals(fieldValue2)) {
+                        return false;
+                    }
+                }  else {
+                    return false;
+                }
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * 作者: cheng fei
+     * 创建日期: 2020/2/2 20:49
+     * 描述 : 反射获取属性值
+     * @param name
+     * @param object
+     * @return
+     */
+    public Object getFieldValueByName(String name, Object object){
+        try {
+            String firstLetter = name.substring(0, 1).toUpperCase();
+            String getter = "get" + firstLetter + name.substring(1);
+            Method method = object.getClass().getMethod(getter);
+            return method.invoke(object);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
+    /**
+     * 作者: cheng fei
      * 创建日期: 2019/4/16 23:09
      * 描述 : 检测模糊查询字符串
      *
@@ -447,11 +555,12 @@ public class BaseService {
      * 作者: cheng fei
      * 创建日期: 2019/6/9 15:10
      * 描述 : 获取账号session token key
+     *
      * @param requestSource 请求来源
-     * @param accountId 账号Id
+     * @param accountId     账号Id
      * @return
      */
-    protected String getAccountTokenPre (String requestSource, Integer accountId) {
+    protected String getAccountTokenPre(String requestSource, Integer accountId) {
         return requestSource + LoginConstant.SESSION_LINK + LoginConstant.ACCOUNT_TOKEN_PRE + accountId;
     }
 
@@ -459,10 +568,11 @@ public class BaseService {
      * 作者: cheng fei
      * 创建日期: 2019/6/9 15:08
      * 描述 :
+     *
      * @param sessionId sessionId
      * @return
      */
-    protected String  getAccountSessionKey (String sessionId){
+    protected String getAccountSessionKey(String sessionId) {
         return LoginConstant.ACCOUNT_SESSION_PRE + sessionId;
     }
 
@@ -487,12 +597,12 @@ public class BaseService {
      * @param accountId  失效session账号Id
      * @param resultEnum 失效信息
      */
-    protected void setSessionDisabled(String  requestSource, Integer accountId, ResultEnum resultEnum) {
+    protected void setSessionDisabled(String requestSource, Integer accountId, ResultEnum resultEnum) {
         if (jedisUtil.exists(sessionDb, getAccountTokenPre(requestSource, accountId))) {
             String sessionId = jedisUtil.get(sessionDb, getAccountTokenPre(requestSource, accountId));
             byte[] bytes = jedisUtil.get(sessionDb, (getAccountSessionKey(sessionId)).getBytes());
             Session oldSession = (Session) SerializationUtils.deserialize(bytes);
-            if (oldSession != null){
+            if (oldSession != null) {
                 oldSession.setAttribute(LoginConstant.LOGIN_MSG, JsonUtils.objectToJson(resultEnum));
                 oldSession.setAttribute(LoginConstant.VALID_SESSION, false);
                 jedisUtil.set(sessionDb, (getAccountSessionKey(sessionId)).getBytes(), SerializationUtils.serialize(oldSession));

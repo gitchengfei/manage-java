@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @Author: cheng fei
@@ -18,10 +19,38 @@ public class BaseBO implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    /**
+     * 创建时间
+     */
+    @Column(name = "create_time")
+    private Date createTime;
+
+    /**
+     * 创建人ID
+     */
+    @Column(name = "create_id")
+    private Integer createId;
+
+    /**
+     * 修改人
+     */
+    @Column(name = "update_time")
+    private Date updateTime;
+
+    /**
+     * 修改人ID
+     */
+    @Column(name = "update_id")
+    private Integer updateId;
+
     @Override
     public String toString() {
         return "BaseBO{" +
                 "id=" + id +
+                ", createTime=" + createTime +
+                ", createId=" + createId +
+                ", updateTime=" + updateTime +
+                ", updateId=" + updateId +
                 '}';
     }
 
@@ -31,5 +60,37 @@ public class BaseBO implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Integer getCreateId() {
+        return createId;
+    }
+
+    public void setCreateId(Integer createId) {
+        this.createId = createId;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Integer getUpdateId() {
+        return updateId;
+    }
+
+    public void setUpdateId(Integer updateId) {
+        this.updateId = updateId;
     }
 }

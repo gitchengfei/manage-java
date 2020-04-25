@@ -1,10 +1,9 @@
 package com.cheng.manage.entity.file;
 
 import com.cheng.manage.entity.base.BaseBO;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Table;
 /**
  * @Author: cheng fei
  * @Date: 2019/6/1 19:40
@@ -62,30 +61,6 @@ public class FileBO extends BaseBO {
      */
     @Column(name = "is_delete")
     private Boolean delete;
-
-    /**
-     * 创建时间
-     */
-    @Column(name = "create_time")
-    private Date createTime;
-
-    /**
-     * 创建人
-     */
-    @Column(name = "create_id")
-    private Integer createId;
-
-    /**
-     * 修改时间
-     */
-    @Column(name = "update_time")
-    private Date updateTime;
-
-    /**
-     * 修改人
-     */
-    @Column(name = "update_id")
-    private Integer updateId;
 
     /**
      * 获取文件名称
@@ -245,78 +220,6 @@ public class FileBO extends BaseBO {
         this.delete = delete;
     }
 
-    /**
-     * 获取创建时间
-     *
-     * @return create_time - 创建时间
-     */
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    /**
-     * 设置创建时间
-     *
-     * @param createTime 创建时间
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    /**
-     * 获取创建人
-     *
-     * @return create_id - 创建人
-     */
-    public Integer getCreateId() {
-        return createId;
-    }
-
-    /**
-     * 设置创建人
-     *
-     * @param createId 创建人
-     */
-    public void setCreateId(Integer createId) {
-        this.createId = createId;
-    }
-
-    /**
-     * 获取修改时间
-     *
-     * @return update_time - 修改时间
-     */
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    /**
-     * 设置修改时间
-     *
-     * @param updateTime 修改时间
-     */
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    /**
-     * 获取修改人
-     *
-     * @return update_id - 修改人
-     */
-    public Integer getUpdateId() {
-        return updateId;
-    }
-
-    /**
-     * 设置修改人
-     *
-     * @param updateId 修改人
-     */
-    public void setUpdateId(Integer updateId) {
-        this.updateId = updateId;
-    }
-
     @Override
     public String toString() {
         return "FileBO{" +
@@ -329,10 +232,10 @@ public class FileBO extends BaseBO {
                 ", size='" + size + '\'' +
                 ", time='" + time + '\'' +
                 ", delete=" + delete +
-                ", createTime=" + createTime +
-                ", createId=" + createId +
-                ", updateTime=" + updateTime +
-                ", updateId=" + updateId +
+                ", createTime=" + getCreateTime() +
+                ", createId=" + getCreateId() +
+                ", updateTime=" + getUpdateTime() +
+                ", updateId=" + getUpdateId() +
                 '}';
     }
 }

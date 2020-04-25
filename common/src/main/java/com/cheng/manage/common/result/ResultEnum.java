@@ -102,8 +102,10 @@ public enum ResultEnum implements Serializable {
      */
     ROLE_NAME_IS_NULL(10600, 500, "角色名称不能为空！"),
     ROLE_NAME_IS_EXIST(10601, 500, "角色名称已存在！"),
-    ROLE_DISPLAY_ORDER_IS_NULL(10602, 500, "排序码不能为空！"),
-    ROLE_STATUS_IS_NULL(10603, 500, "角色状态不能为空！"),
+    ROLE_CODE_IS_NULL(10602, 500, "角色比编码不能为空！"),
+    ROLE_CODE_IS_EXIST(10603, 500, "角色编码已存在！"),
+    ROLE_DISPLAY_ORDER_IS_NULL(10604, 500, "排序码不能为空！"),
+    ROLE_STATUS_IS_NULL(10605, 500, "角色状态不能为空！"),
 
 
     /**

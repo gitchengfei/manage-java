@@ -3,7 +3,6 @@ package com.cheng.manage.service.system.permission.impl;
 import com.cheng.manage.common.exception.MyException;
 import com.cheng.manage.common.result.Result;
 import com.cheng.manage.common.result.ResultEnum;
-import com.cheng.manage.constant.app.ApplicationConstant;
 import com.cheng.manage.constant.app.system.SystemConstant;
 import com.cheng.manage.constant.app.system.permission.PermissionConstant;
 import com.cheng.manage.entity.system.menu.MenuBO;
@@ -17,8 +16,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @Description : permissionService 接口实现类
@@ -42,6 +45,7 @@ public class PermissionServiceImpl extends SystemBaseService implements Permissi
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result saveOrUpdatePermission(PermissionBO permission, boolean isUpdateStatus) {
 
         logger.debug("新增/修改权限： permission=【 {} 】， isUpdateStatus=【 {} 】", permission, isUpdateStatus);
@@ -82,9 +86,10 @@ public class PermissionServiceImpl extends SystemBaseService implements Permissi
 
             saveDBLog(loginAccountId, getDBLog(permission, oldPermission, isUpdateStatus), DB_LOG_TYPE);
 
-            //删除所有用户缓存的权限列表
-            jedisUtil.delAll(appCacheDb,PermissionConstant.ACCOUNT_PERMISSIONS_KEY_PRE + "*");
         }
+
+        //删除所有用户缓存的权限列表
+        jedisUtil.delAll(appCacheDb,PermissionConstant.ACCOUNT_PERMISSIONS_KEY_PRE + "*");
 
         // 新增/修改权限时,删除菜单权限树缓存
         deleteRedis(SystemConstant.MENU_PERMISSION_TREE_REDIS_KEY);
@@ -125,6 +130,7 @@ public class PermissionServiceImpl extends SystemBaseService implements Permissi
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result deletePermission(Integer id) {
 
         logger.debug("删除权限, account=【 {} 】, id=【 {} 】", id);

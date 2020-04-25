@@ -3,7 +3,6 @@ package com.cheng.manage.service.account.role.impl;
 import com.cheng.manage.common.exception.MyException;
 import com.cheng.manage.common.result.Result;
 import com.cheng.manage.common.result.ResultEnum;
-import com.cheng.manage.constant.app.ApplicationConstant;
 import com.cheng.manage.constant.app.account.role.RoleConstant;
 import com.cheng.manage.constant.app.system.menu.MenuConstant;
 import com.cheng.manage.constant.app.system.permission.PermissionConstant;
@@ -17,8 +16,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Description : roleService 接口实现类
@@ -40,6 +42,7 @@ public class RoleServiceImpl extends AccountBaseService implements RoleService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result saveOrUpdateRole(RoleBO roleBO, boolean isUpdateStatus) {
 
         Integer loginAccountId = getLoginAccountId();
@@ -83,21 +86,22 @@ public class RoleServiceImpl extends AccountBaseService implements RoleService {
     }
 
     @Override
-    public Result getRoleList(String name, Integer page, Integer pageSize) {
+    public Result getRoleList(String name, String roleCode, Integer page, Integer pageSize) {
 
         logger.debug("查询角色列表，name=【 {} 】，page=【 {} 】，pageSize=【 {} 】", name, page, pageSize);
 
         //检测参数
         name = checkSearchString(name);
+        roleCode = checkSearchString(roleCode);
         //分页
         PageHelper.startPage(page, pageSize);
-        List<RoleBO> RoleBOs = roleMapper.getRoleList(name);
-        PageInfo<RoleBO> info = new PageInfo<>(RoleBOs);
-        RoleBOs = info.getList();
+        List<RoleBO> roleBOS = roleMapper.getRoleList(name, roleCode);
+        PageInfo<RoleBO> info = new PageInfo<>(roleBOS);
+        roleBOS = info.getList();
 
         //数据处理
         List<RoleDTO> data = new ArrayList<>();
-        for (RoleBO roleBO : RoleBOs) {
+        for (RoleBO roleBO : roleBOS) {
             RoleDTO roleDTO = new RoleDTO(roleBO);
             roleDTO.setCreateName(accountMapper.getNameById(roleBO.getCreateId()));
             roleDTO.setUpdateName(accountMapper.getNameById(roleBO.getUpdateId()));
@@ -115,6 +119,7 @@ public class RoleServiceImpl extends AccountBaseService implements RoleService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result deleteRole(Integer id) {
 
         logger.debug("删除角色,id=【 {} 】", id);
@@ -123,16 +128,13 @@ public class RoleServiceImpl extends AccountBaseService implements RoleService {
         String roleName = roleMapper.getRoleNameById(id);
 
         //删除账号角色
-        int i = accountRoleMapper.deleteAccountRoleByROleId(id);
-        checkDbDelete(i);
+        accountRoleMapper.deleteAccountRoleByROleId(id);
 
         //删除角色权限
-        i = rolePermissionMapper.deleteRolePermissionByRoleId(id);
-        checkDbDelete(i);
+        rolePermissionMapper.deleteRolePermissionByRoleId(id);
 
         //删除角色
-        i = roleMapper.deleteByPrimaryKey(id);
-        checkDbDelete(i);
+        roleMapper.deleteByPrimaryKey(id);
 
         //数据库操作日志
         String log = "删除了角色【 " + roleName  + " 】";
@@ -145,6 +147,7 @@ public class RoleServiceImpl extends AccountBaseService implements RoleService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result updateRolePermission(Integer id, String permissions) {
 
         //检测参数
@@ -231,6 +234,12 @@ public class RoleServiceImpl extends AccountBaseService implements RoleService {
         return Result.succee( roleMapper.getAllRole());
     }
 
+    @Override
+    public Result checkRoleCode(String code, Integer excludeId) {
+        Integer count = roleMapper.checkRoleCode(code, excludeId);
+        return Result.succee(null == count || count < 1);
+    }
+
     /**
      * 作者: cheng fei
      * 创建日期: 2019/4/23 22:52
@@ -246,6 +255,10 @@ public class RoleServiceImpl extends AccountBaseService implements RoleService {
         if (!isUpdateStatus) {
             if (!equalsString(roleBO.getName(), oldRoleBO.getName())){
                 log.append("角色名称：").append(oldRoleBO.getName()).append("==>").append(roleBO.getName()).append("，");
+            }
+
+            if (!equalsString(roleBO.getRoleCode(), oldRoleBO.getRoleCode())){
+                log.append("角色编码：").append(oldRoleBO.getRoleCode()).append("==>").append(roleBO.getRoleCode()).append("，");
             }
 
             if (!equalsInteger(roleBO.getDisplayOrder(), oldRoleBO.getDisplayOrder())){
@@ -306,6 +319,15 @@ public class RoleServiceImpl extends AccountBaseService implements RoleService {
             } else {
                 if (!checkRoleName(roleBO.getName(), oldRoleBO == null ? null : oldRoleBO.getId())) {
                     throw new MyException(ResultEnum.ROLE_NAME_IS_EXIST);
+                }
+            }
+
+            //检测角色编码
+            if (StringUtils.isBlank(roleBO.getRoleCode())) {
+                throw new MyException(ResultEnum.ROLE_CODE_IS_NULL);
+            } else {
+                if (!(Boolean) checkRoleCode(roleBO.getName(), oldRoleBO == null ? null : oldRoleBO.getId()).getData()) {
+                    throw new MyException(ResultEnum.ROLE_CODE_IS_EXIST);
                 }
             }
 

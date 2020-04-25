@@ -18,6 +18,7 @@ import com.cheng.manage.service.system.base.SystemBaseService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -43,6 +44,7 @@ public class MenuServiceImpl extends SystemBaseService implements MenuService {
     private PermissionMapper permissionMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result saveORUpdateMenu(MenuBO menu, boolean isUpdateStatus) {
         logger.debug("新增/修改菜单：menu=【 {} 】", menu);
         Integer loginAccountId = getLoginAccountId();
@@ -292,6 +294,7 @@ public class MenuServiceImpl extends SystemBaseService implements MenuService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result deleteMenu(Integer id) {
 
         logger.debug("删除菜单,菜单ID=【 {} 】", id );
@@ -522,6 +525,7 @@ public class MenuServiceImpl extends SystemBaseService implements MenuService {
      * @param parentId 父菜单ID
      * @param hasChildren  是否存在子菜单
      */
+    @Transactional(rollbackFor = Exception.class)
     private void updateParentMenu(Integer accountID, Integer parentId, Boolean hasChildren){
         //检测父菜单
         if (parentId == null){

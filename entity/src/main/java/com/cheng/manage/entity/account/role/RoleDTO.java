@@ -24,6 +24,7 @@ public class RoleDTO extends RoleBO{
     public RoleDTO(RoleBO roleBO) {
         setId(roleBO.getId());
         setName(roleBO.getName());
+        setRoleCode(roleBO.getRoleCode());
         setDisplayOrder(roleBO.getDisplayOrder());
         setStatus(roleBO.getStatus());
         setRemark(roleBO.getRemark());

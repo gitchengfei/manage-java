@@ -7,6 +7,7 @@ import com.cheng.manage.entity.file.UnusedFileBO;
 import com.cheng.manage.service.base.BaseService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -25,6 +26,7 @@ public class AutoDeleteFileServiceImpl extends BaseService implements AutoDelete
     private int deleteFileBeforeDay;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void doDeleteUnUsedFile() {
         logger.debug("执行自动清理文件开始...");
         String deleteDay = null;

@@ -1,7 +1,5 @@
 package com.cheng.manage.service.account.account.impl;
 
-import com.alibaba.druid.sql.visitor.functions.If;
-import com.cheng.manage.common.aliyun.AliyunOSSClientUtil;
 import com.cheng.manage.common.exception.MyException;
 import com.cheng.manage.common.result.Result;
 import com.cheng.manage.common.result.ResultEnum;
@@ -16,8 +14,8 @@ import com.cheng.manage.service.account.base.AccountBaseService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sun.misc.BASE64Decoder;
 
 import java.nio.charset.StandardCharsets;
@@ -84,6 +82,7 @@ public class AccountServiceImpl extends AccountBaseService implements AccountSer
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result saveOrUpdateAccount(AccountBO accountBO, String roleIds, boolean isResetPassword, boolean isUpdateStatus) {
 
         AccountBO oldAccountBo = null;
@@ -176,6 +175,7 @@ public class AccountServiceImpl extends AccountBaseService implements AccountSer
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result deleteAccount(Integer id) {
 
         //获取当前登录账号ID
@@ -236,6 +236,7 @@ public class AccountServiceImpl extends AccountBaseService implements AccountSer
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result updateAccountRole(String ids, String roleIds) {
         if (StringUtils.isNotBlank(ids)){
             String[] accountIdArrayStr = ids.split(",");
@@ -265,6 +266,7 @@ public class AccountServiceImpl extends AccountBaseService implements AccountSer
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result updateAccountPassword(String oldPassword, String newPassword) {
 
         AccountBO loginAccount = getLoginAccount();
@@ -302,6 +304,7 @@ public class AccountServiceImpl extends AccountBaseService implements AccountSer
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result updateHeadPortrait(Integer fileId) {
 
         Integer loginAccountId = getLoginAccountId();

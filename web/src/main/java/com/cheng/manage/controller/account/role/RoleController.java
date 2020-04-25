@@ -2,7 +2,6 @@ package com.cheng.manage.controller.account.role;
 
 import com.cheng.manage.common.result.Result;
 import com.cheng.manage.controller.account.base.AccountBaseController;
-import com.cheng.manage.entity.account.account.AccountBO;
 import com.cheng.manage.entity.account.role.RoleBO;
 import com.cheng.manage.service.account.role.RoleService;
 import io.swagger.annotations.Api;
@@ -36,11 +35,13 @@ public class RoleController extends AccountBaseController {
     @RequiresPermissions("/account/role/save")
     public Result saveRole(
             @ApiParam(value = "角色名称") @RequestParam(required = true) String name,
+            @ApiParam(value = "角色编码") @RequestParam(required = true) String roleCode,
             @ApiParam(value = "排序码") @RequestParam(required = true) Integer displayOrder,
             @ApiParam(value = "备注") @RequestParam(required = false, defaultValue = "") String remark
     ) {
         RoleBO roleBO = new RoleBO();
         roleBO.setName(name);
+        roleBO.setRoleCode(roleCode);
         roleBO.setDisplayOrder(displayOrder);
         roleBO.setRemark(remark);
         return roleService.saveOrUpdateRole(roleBO, false);
@@ -53,6 +54,7 @@ public class RoleController extends AccountBaseController {
     public Result updateRole(
             @ApiParam(value = "角色id") @RequestParam(required = true) Integer id,
             @ApiParam(value = "角色名称") @RequestParam(required = true) String name,
+            @ApiParam(value = "角色编码") @RequestParam(required = true) String roleCode,
             @ApiParam(value = "排序码") @RequestParam(required = true) Integer displayOrder,
             @ApiParam(value = "备注") @RequestParam(required = false, defaultValue = "") String remark,
             @ApiParam(value = "历史修改时间") @RequestParam(required = false, defaultValue = "") Long updateTime
@@ -60,6 +62,7 @@ public class RoleController extends AccountBaseController {
         RoleBO roleBO = new RoleBO();
         roleBO.setId(id);
         roleBO.setName(name);
+        roleBO.setRoleCode(roleCode);
         roleBO.setDisplayOrder(displayOrder);
         roleBO.setRemark(remark);
         roleBO.setUpdateTime(updateTime == null ? null : new Date(updateTime));
@@ -97,10 +100,11 @@ public class RoleController extends AccountBaseController {
     @RequiresPermissions("/account/role/list")
     public Result getRoleList(
             @ApiParam(value = "角色名称(模糊)") @RequestParam(required = true) String name,
+            @ApiParam(value = "角色编码(模糊)") @RequestParam(required = true) String roleCode,
             @ApiParam(value = "页码") @RequestParam(required = false,defaultValue = "1") Integer page,
             @ApiParam(value = "每页加载条数") @RequestParam(required = false,defaultValue = "10") Integer pageSize
     ) {
-        return roleService.getRoleList(name, page, pageSize);
+        return roleService.getRoleList(name, roleCode, page, pageSize);
     }
 
     @PostMapping("check/name")
@@ -137,6 +141,15 @@ public class RoleController extends AccountBaseController {
         return roleService.getRoleCheckbox();
     }
 
+
+    @PostMapping("/check/code")
+    @ApiOperation(value = "检测角色编码", httpMethod = "POST", produces = "application/json")
+    public Result checkRoleCode(
+            @ApiParam(value = "编码", required = true) @RequestParam(required = true) String code,
+            @ApiParam(value = "需要排除的Id", required = false) @RequestParam(required = false, defaultValue = "") Integer excludeId
+    ) {
+        return roleService.checkRoleCode(code, excludeId);
+    }
 
 
 }

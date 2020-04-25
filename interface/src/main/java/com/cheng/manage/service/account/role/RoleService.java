@@ -1,7 +1,6 @@
 package com.cheng.manage.service.account.role;
 
 import com.cheng.manage.common.result.Result;
-import com.cheng.manage.entity.account.account.AccountBO;
 import com.cheng.manage.entity.account.role.RoleBO;
 
 import java.util.List;
@@ -37,11 +36,12 @@ public interface RoleService {
      * 创建日期: 2019/4/23 23:42
      * 描述 : 获取角色列表
      * @param name 权限名称(模糊查询)
+     * @param roleCode 权限名称(模糊查询)
      * @param page 页码
      * @param pageSize 每页加载条数
      * @return
      */
-    Result getRoleList(String name, Integer page, Integer pageSize);
+    Result getRoleList(String name, String roleCode, Integer page, Integer pageSize);
 
     /**
      * 作者: cheng fei
@@ -88,4 +88,14 @@ public interface RoleService {
      * @return
      */
     Result getRoleCheckbox();
+
+    /**
+     * 作者: cheng fei
+     * 创建日期: 2020/4/25 21:33
+     * 描述 : 检测角色编码是否重复
+     * @param code
+     * @param excludeId
+     * @return
+     */
+    Result checkRoleCode(String code, Integer excludeId);
 }

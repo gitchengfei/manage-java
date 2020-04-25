@@ -1,13 +1,15 @@
 package com.cheng.manage.entity.system.db.log;
 
-import com.cheng.manage.entity.base.BaseBO;
-
-import javax.persistence.Column;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Table(name = "db_log")
-public class DbLogBO  extends BaseBO {
+public class DbLogBO {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     /**
      * 操作人
@@ -48,6 +50,15 @@ public class DbLogBO  extends BaseBO {
      */
     @Column(name = "reserved_three")
     private String reservedThree;
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     /**
      * 获取操作人
@@ -178,7 +189,7 @@ public class DbLogBO  extends BaseBO {
     @Override
     public String toString() {
         return "DbLogBO{" +
-                "id=" + getId() +
+                "id=" + id +
                 ", accountId=" + accountId +
                 ", createTime=" + createTime +
                 ", type='" + type + '\'' +

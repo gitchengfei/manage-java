@@ -7,6 +7,7 @@
         -->
         <result column="id" property="id" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="role_code" property="roleCode" jdbcType="VARCHAR"/>
         <result column="display_order" property="displayOrder" jdbcType="INTEGER"/>
         <result column="status" property="status" jdbcType="BIT"/>
         <result column="remark" property="remark" jdbcType="VARCHAR"/>
@@ -20,24 +21,40 @@
     </resultMap>
 
     <!-- 通过姓名的查询角色总数 -->
-    <update id="countByName">
+    <select resultType="java.lang.Integer" id="countByName">
         SELECT count(id) FROM role
         WHERE
         `name` = #{name}
         <if test="excludeId !=null">
             AND id != #{excludeId}
         </if>
-    </update>
+    </select>
+
+    <!-- 检测角色编码是否存在 -->
+    <select resultType="java.lang.Integer" id="checkRoleCode">
+        SELECT
+            count(id)
+        FROM
+            role
+        WHERE
+            role_code = #{code}
+        <if test="excludeId != null">
+            AND id != #{excludeId}
+        </if>
+    </select>
 
     <!-- 查询角色列表 -->
     <select id="getRoleList" resultMap="BaseResultMap">
         SELECT
-        id, `name`, display_order, status, remark, create_id, create_time, update_id, update_time
+        id, `name`, role_code, display_order, status, remark, create_id, create_time, update_id, update_time
         FROM
             role
         <where>
             <if test="name">
                 `name` LIKE #{name}
+            </if>
+            <if test="roleCode">
+                role_code LIKE #{roleCode}
             </if>
         </where>
         order by display_order

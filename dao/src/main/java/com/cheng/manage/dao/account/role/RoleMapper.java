@@ -31,9 +31,10 @@ public interface RoleMapper extends BaseMapper<RoleBO> {
      * 创建日期: 2019/4/23 23:46
      * 描述 : 查询角色列表
      * @param name 名称(模糊查询)
+     * @param roleCode 编码(模糊查询)
      * @return
      */
-    List<RoleBO> getRoleList(@Param("name") String name);
+    List<RoleBO> getRoleList(@Param("name") String name, @Param("roleCode") String roleCode);
 
     /**
      * 作者: cheng fei
@@ -68,4 +69,14 @@ public interface RoleMapper extends BaseMapper<RoleBO> {
      * @return
      */
     List<Integer> getAllRoleId();
+
+    /**
+     * 作者: cheng fei
+     * 创建日期: 2020/4/25 21:35
+     * 描述 : 查询角色编码是否存在
+     * @param code
+     * @param excludeId
+     * @return
+     */
+    Integer checkRoleCode(@Param("code") String code, @Param("excludeId") Integer excludeId);
 }

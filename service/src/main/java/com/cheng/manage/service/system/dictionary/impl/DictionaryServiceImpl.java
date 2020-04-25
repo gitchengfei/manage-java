@@ -3,10 +3,8 @@ package com.cheng.manage.service.system.dictionary.impl;
 import com.cheng.manage.common.exception.MyException;
 import com.cheng.manage.common.result.Result;
 import com.cheng.manage.common.result.ResultEnum;
-import com.cheng.manage.constant.app.ApplicationConstant;
 import com.cheng.manage.dao.account.account.AccountMapper;
 import com.cheng.manage.dao.system.dictionary.DictionaryMapper;
-import com.cheng.manage.entity.account.account.AccountBO;
 import com.cheng.manage.entity.system.dictionary.DictionaryBO;
 import com.cheng.manage.entity.system.dictionary.DictionaryDTO;
 import com.cheng.manage.service.system.base.SystemBaseService;
@@ -18,8 +16,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Description : 数据字典接口实现类
@@ -46,6 +47,7 @@ public class DictionaryServiceImpl extends SystemBaseService implements Dictiona
     private AccountMapper accountMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result saveOrUpdateDictionary(DictionaryBO dictionary, boolean isUpdateStatus) throws MyException {
         Integer loginAccountId = getLoginAccountId();
         logger.debug("添加/修数据字典:【 {} 】", dictionary);
@@ -102,6 +104,7 @@ public class DictionaryServiceImpl extends SystemBaseService implements Dictiona
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result deleteDictionary(Integer id) {
 
         logger.debug("删除数据字典, id=【 {} 】", id);

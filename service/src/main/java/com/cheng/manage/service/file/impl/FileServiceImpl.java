@@ -1,31 +1,27 @@
 package com.cheng.manage.service.file.impl;
 
-import com.cheng.manage.common.aliyun.AliyunOSSClientUtil;
 import com.cheng.manage.common.exception.MyException;
 import com.cheng.manage.common.result.Result;
 import com.cheng.manage.common.result.ResultEnum;
-import com.cheng.manage.constant.app.ApplicationConstant;
 import com.cheng.manage.constant.app.file.FileConstant;
-import com.cheng.manage.dao.file.FileMapper;
-import com.cheng.manage.dao.file.UnusedFileMapper;
 import com.cheng.manage.dao.system.dictionary.DictionaryMapper;
 import com.cheng.manage.entity.file.FileBO;
 import com.cheng.manage.entity.file.FileDTO;
-import com.cheng.manage.entity.file.UnusedFileBO;
 import com.cheng.manage.entity.file.UseFileBO;
 import com.cheng.manage.service.base.BaseService;
 import com.cheng.manage.service.file.FileService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.io.InputStream;
 import java.net.URLDecoder;
-import java.util.*;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: cheng fei
@@ -47,6 +43,7 @@ public class FileServiceImpl extends BaseService implements FileService {
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result saveFile(String uploadFileName) {
 
         logger.debug("保存文件:uploadFileName=【{}】", uploadFileName);
@@ -145,6 +142,7 @@ public class FileServiceImpl extends BaseService implements FileService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result updateFileName(FileBO fileBO) {
 
         logger.debug("修改文件： file=【 {} 】", fileBO);
