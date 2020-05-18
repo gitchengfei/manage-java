@@ -133,6 +133,21 @@ public class BaseService {
 
     /**
      * 作者: cheng fei
+     * 创建日期: 2020/5/18 22:31
+     * 描述 : 设置创建人或修改人
+     * @param baseBO
+     */
+    protected void setCreateNameAndUpdateName(BaseBO baseBO) {
+        if (null != baseBO.getCreateId()) {
+            baseBO.setCreateName(accountMapper.getNameById(baseBO.getCreateId()));
+        }
+        if (null != baseBO.getUpdateId()) {
+            baseBO.setUpdateName(accountMapper.getNameById(baseBO.getUpdateId()));
+        }
+    }
+
+    /**
+     * 作者: cheng fei
      * 创建日期: 2020/2/2 19:03
      * 描述 : 设置修改信息
      *

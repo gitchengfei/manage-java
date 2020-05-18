@@ -12,16 +12,6 @@ import java.util.List;
 public class AccountDTO extends AccountBO {
 
     /**
-     * 创建人
-     */
-    private String createName;
-
-    /**
-     * 修改人
-     */
-    private String updateName;
-
-    /**
      * 角色列表
      */
     private List<RoleBO> roles;
@@ -67,8 +57,8 @@ public class AccountDTO extends AccountBO {
                 ", reservedOne='" + getReservedOne() + '\'' +
                 ", reservedTwo='" + getReservedTwo() + '\'' +
                 ", reservedThree='" + getReservedThree() + '\'' +
-                "createName='" + createName + '\'' +
-                ", updateName='" + updateName + '\'' +
+                "createName='" + getCreateName() + '\'' +
+                ", updateName='" + getUpdateId() + '\'' +
                 ", roles=" + roles +
                 '}';
     }
@@ -81,19 +71,4 @@ public class AccountDTO extends AccountBO {
         this.roles = roles;
     }
 
-    public String getCreateName() {
-        return createName;
-    }
-
-    public void setCreateName(String createName) {
-        this.createName = createName;
-    }
-
-    public String getUpdateName() {
-        return updateName;
-    }
-
-    public void setUpdateName(String updateName) {
-        this.updateName = updateName;
-    }
 }

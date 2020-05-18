@@ -7,10 +7,6 @@ package com.cheng.manage.entity.system.dictionary;
  */
 public class DictionaryDTO extends DictionaryBO{
 
-    private String createName;
-
-    private String updateName;
-
     public DictionaryDTO(DictionaryBO dictionary) {
         super();
         setId(dictionary.getId());
@@ -29,28 +25,10 @@ public class DictionaryDTO extends DictionaryBO{
         setReservedThree(dictionary.getReservedThree());
     }
 
-    public String getCreateName() {
-        return createName;
-    }
-
-    public void setCreateName(String createName) {
-        this.createName = createName;
-    }
-
-    public String getUpdateName() {
-        return updateName;
-    }
-
-    public void setUpdateName(String updateName) {
-        this.updateName = updateName;
-    }
-
     @Override
     public String toString() {
         return "DictionaryDTO{" +
-                "createName='" + createName + '\'' +
-                ", updateName='" + updateName + '\'' +
-                ", id=" + getId() +
+                "id=" + getId() +
                 ", name='" + getName() + '\'' +
                 ", key='" + getKey() + '\'' +
                 ", value='" + getValue() + '\'' +
@@ -59,8 +37,10 @@ public class DictionaryDTO extends DictionaryBO{
                 ", status=" + getStatus() +
                 ", createTime=" + getCreateTime() +
                 ", createId=" + getCreateId() +
+                ", createName='" + getCreateName() + '\'' +
                 ", updateTime=" + getUpdateTime() +
                 ", updateId=" + getUpdateId() +
+                ", updateName='" + getUpdateName() + '\'' +
                 ", reservedOne='" + getReservedOne() + '\'' +
                 ", reservedTwo='" + getReservedTwo() + '\'' +
                 ", reservedThree='" + getReservedThree() + '\'' +

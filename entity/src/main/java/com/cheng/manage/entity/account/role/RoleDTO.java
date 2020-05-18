@@ -7,16 +7,6 @@ package com.cheng.manage.entity.account.role;
  */
 public class RoleDTO extends RoleBO{
 
-    /**
-     * 创建人名
-     */
-    private String createName;
-
-    /**
-     * 修改人名
-     */
-    private String updateName;
-
     public RoleDTO() {
 
     }
@@ -40,35 +30,19 @@ public class RoleDTO extends RoleBO{
     @Override
     public String toString() {
         return "RoleDTO{" +
-                "createName='" + createName + '\'' +
-                ", updateName='" + updateName + '\'' +
-                ", id=" + getId() +
+                "id=" + getId() +
                 ", name='" + getName() + '\'' +
                 ", status=" + getStatus() +
                 ", remark='" + getRemark() + '\'' +
                 ", createTime=" + getCreateTime() +
                 ", createId=" + getCreateId() +
+                ", createName='" + getCreateName() + '\'' +
                 ", updateTime=" + getUpdateTime() +
                 ", updateId=" + getUpdateId() +
+                ", updateName='" + getUpdateId() + '\'' +
                 ", reservedOne='" + getReservedOne() + '\'' +
                 ", reservedTwo='" + getReservedTwo() + '\'' +
                 ", reservedThree='" + getReservedThree() + '\'' +
                 '}';
-    }
-
-    public String getCreateName() {
-        return createName;
-    }
-
-    public void setCreateName(String createName) {
-        this.createName = createName;
-    }
-
-    public String getUpdateName() {
-        return updateName;
-    }
-
-    public void setUpdateName(String updateName) {
-        this.updateName = updateName;
     }
 }

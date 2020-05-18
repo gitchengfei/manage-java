@@ -95,8 +95,7 @@ public class DictionaryServiceImpl extends SystemBaseService implements Dictiona
         List<DictionaryDTO> rows = new ArrayList<>();
         for (DictionaryBO dictionary : list) {
             DictionaryDTO dictionaryDTO = new DictionaryDTO(dictionary);
-            dictionaryDTO.setCreateName(accountMapper.getNameById(dictionary.getCreateId()));
-            dictionaryDTO.setUpdateName(accountMapper.getNameById(dictionary.getUpdateId()));
+            setCreateNameAndUpdateName(dictionaryDTO);
             rows.add(dictionaryDTO);
         }
 

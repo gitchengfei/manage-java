@@ -64,8 +64,7 @@ public class AccountServiceImpl extends AccountBaseService implements AccountSer
         for (AccountBO accountBO : info.getList()) {
             accountBO.setPassword(null);
             AccountDTO accountDTO = new AccountDTO(accountBO);
-            accountDTO.setCreateName(accountMapper.getNameById(accountBO.getCreateId()));
-            accountDTO.setUpdateName(accountMapper.getNameById(accountBO.getUpdateId()));
+            setCreateNameAndUpdateName(accountDTO);
             if (systemSuperAdministrator.equals(accountBO.getUsername())) {
                 accountDTO.setRoles(roleMapper.getAllRole());
             } else {

@@ -7,11 +7,6 @@ package com.cheng.manage.entity.system.permission;
  */
 public class PermissionDTO extends PermissionBO {
 
-
-    private String createName;
-
-    private String updateName;
-
     public PermissionDTO() {
 
     }
@@ -34,27 +29,10 @@ public class PermissionDTO extends PermissionBO {
         setReservedThree(permission.getReservedThree());
     }
 
-    public String getCreateName() {
-        return createName;
-    }
-
-    public void setCreateName(String createName) {
-        this.createName = createName;
-    }
-
-    public String getUpdateName() {
-        return updateName;
-    }
-
-    public void setUpdateName(String updateName) {
-        this.updateName = updateName;
-    }
-
     @Override
     public String toString() {
         return "PermissionDTO{" +
-                "updateName='" + updateName + '\'' +
-                ", id=" + getId() +
+                "id=" + getId() +
                 ", menuId=" + getMenuId() +
                 ", url='" + getUpdateName() + '\'' +
                 ", name='" + getName() + '\'' +
@@ -63,8 +41,10 @@ public class PermissionDTO extends PermissionBO {
                 ", remark='" + getRemark() + '\'' +
                 ", createId=" + getCreateId() +
                 ", createTime=" + getCreateTime() +
+                ", createName='" + getCreateName() + '\'' +
                 ", updateId=" + getUpdateId() +
                 ", updateTime=" + getUpdateTime() +
+                ", updateName='" + getUpdateName() + '\'' +
                 ", reservedOne='" + getReservedOne() + '\'' +
                 ", reservedTwo='" + getReservedTwo() + '\'' +
                 ", reservedThree='" + getReservedThree()+ '\'' +

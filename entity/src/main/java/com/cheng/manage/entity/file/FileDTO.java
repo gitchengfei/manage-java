@@ -1,7 +1,5 @@
 package com.cheng.manage.entity.file;
 
-import com.cheng.manage.entity.system.dictionary.DictionaryBO;
-
 /**
  * @Author: cheng fei
  * @Date: 2019/6/3 10:40
@@ -13,16 +11,6 @@ public class FileDTO extends FileBO{
      * 是否引用
      */
     private Boolean used;
-
-    /**
-     * 创建人
-     */
-    private String createName;
-
-    /**
-     * 修改人
-     */
-    private String updateName;
 
     /**
      * 数据字段类型名称
@@ -56,22 +44,6 @@ public class FileDTO extends FileBO{
         this.used = used;
     }
 
-    public String getCreateName() {
-        return createName;
-    }
-
-    public void setCreateName(String createName) {
-        this.createName = createName;
-    }
-
-    public String getUpdateName() {
-        return updateName;
-    }
-
-    public void setUpdateName(String updateName) {
-        this.updateName = updateName;
-    }
-
     public String getTypeName() {
         return TypeName;
     }
@@ -98,8 +70,8 @@ public class FileDTO extends FileBO{
                 ", updateTime=" + getUpdateName() +
                 ", updateId=" + getUpdateId() +
                 ", used='" + used + '\'' +
-                ", createName='" + createName + '\'' +
-                ", updateName='" + updateName + '\'' +
+                ", createName='" + getCreateName() + '\'' +
+                ", updateName='" + getUpdateName() + '\'' +
                 ", TypeName='" + TypeName + '\'' +
                 '}';
     }

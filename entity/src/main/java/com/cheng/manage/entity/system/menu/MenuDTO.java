@@ -9,16 +9,6 @@ import java.util.List;
  */
 public class MenuDTO extends MenuBO{
 
-    /**
-     * 创建人
-     */
-    private String createName;
-
-    /**
-     * 修改人
-     */
-    private String updateName;
-
     private List<MenuDTO> children;
 
     private MenuDTO(){
@@ -51,40 +41,24 @@ public class MenuDTO extends MenuBO{
         this.children = children;
     }
 
-    public String getCreateName() {
-        return createName;
-    }
-
-    public void setCreateName(String createName) {
-        this.createName = createName;
-    }
-
-    public String getUpdateName() {
-        return updateName;
-    }
-
-    public void setUpdateName(String updateName) {
-        this.updateName = updateName;
-    }
-
     @Override
     public String toString() {
         return "MenuDTO{" +
-                "createName='" + createName + '\'' +
-                ", updateName='" + updateName + '\'' +
-                ", children=" + children +
-                ", id=" + getId() +
+                "id=" + getId() +
                 ", name='" + getName() + '\'' +
                 ", url='" + getUrl() + '\'' +
                 ", parentId=" + getParentId() +
                 ", displayOrder=" + getDisplayOrder() +
+                ", children=" + children +
                 ", status=" + getStatus() +
                 ", hasChildren=" + getHasChildren() +
                 ", hasPermission=" + getHasPermission() +
                 ", createTime=" + getCreateTime() +
                 ", createId=" + getCreateId() +
+                ", createName='" + getCreateName() + '\'' +
                 ", updateTime=" + getUpdateTime() +
                 ", updateId=" + getUpdateId() +
+                ", updateName='" + getUpdateName() + '\'' +
                 ", reservedOne='" + getReservedOne() + '\'' +
                 ", reservedTwo='" + getReservedTwo() + '\'' +
                 ", reservedThree='" + getReservedThree() + '\'' +

@@ -103,8 +103,7 @@ public class RoleServiceImpl extends AccountBaseService implements RoleService {
         List<RoleDTO> data = new ArrayList<>();
         for (RoleBO roleBO : roleBOS) {
             RoleDTO roleDTO = new RoleDTO(roleBO);
-            roleDTO.setCreateName(accountMapper.getNameById(roleBO.getCreateId()));
-            roleDTO.setUpdateName(accountMapper.getNameById(roleBO.getUpdateId()));
+            setCreateNameAndUpdateName(roleDTO);
             data.add(roleDTO);
         }
 

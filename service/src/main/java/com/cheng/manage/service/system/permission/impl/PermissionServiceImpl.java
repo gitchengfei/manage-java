@@ -121,8 +121,7 @@ public class PermissionServiceImpl extends SystemBaseService implements Permissi
         for (PermissionBO permission : info.getList()) {
 
             PermissionDTO permissionDTO = new PermissionDTO(permission);
-            permissionDTO.setCreateName(accountMapper.getNameById(permission.getCreateId()));
-            permissionDTO.setUpdateName(accountMapper.getNameById(permission.getUpdateId()));
+            setCreateNameAndUpdateName(permissionDTO);
             permissionDTOS.add(permissionDTO);
         }
 

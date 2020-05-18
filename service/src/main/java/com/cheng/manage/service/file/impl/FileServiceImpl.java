@@ -119,9 +119,7 @@ public class FileServiceImpl extends BaseService implements FileService {
             fileDTO.setUsed(checkFileUse(fileBO.getId()));
             fileDTO.setTypeName(dictionaryMapper.getNameByCode(fileBO.getType()));
             fileDTO.setFilePurpose(dictionaryMapper.getNameByCode(fileBO.getFilePurpose()));
-            fileDTO.setCreateName(fileBO.getCreateId() == null ? "" : accountMapper.getNameById(fileBO.getCreateId()));
-            fileDTO.setUpdateName(fileBO.getUpdateId() == null ? "" : accountMapper.getNameById(fileBO.getUpdateId()));
-
+            setCreateNameAndUpdateName(fileDTO);
             rows.add(fileDTO);
         }
         aliyunOSSClientUtil.closeOSSClient();

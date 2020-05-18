@@ -79,12 +79,7 @@ public class MenuServiceImpl extends SystemBaseService implements MenuService {
         List<MenuDTO> data = new ArrayList<>();
         for (MenuBO menu : menuList) {
             MenuDTO menuDTO = new MenuDTO(menu);
-            if (menu.getCreateId() != null){
-                menuDTO.setCreateName(accountMapper.getNameById(menu.getCreateId()));
-            }
-            if (menu.getUpdateId() != null){
-                menuDTO.setUpdateName(accountMapper.getNameById(menu.getUpdateId()));
-            }
+            setCreateNameAndUpdateName(menuDTO);
             data.add(menuDTO);
         }
         return Result.succee(data);

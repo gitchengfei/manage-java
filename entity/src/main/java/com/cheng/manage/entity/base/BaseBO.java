@@ -32,16 +32,26 @@ public class BaseBO implements Serializable {
     private Integer createId;
 
     /**
-     * 修改人
+     * 修改人Id
      */
     @Column(name = "update_time")
     private Date updateTime;
 
     /**
-     * 修改人ID
+     * 修改时间
      */
     @Column(name = "update_id")
     private Integer updateId;
+
+    /**
+     * 创建人名称
+     */
+    private String createName;
+
+    /**
+     * 修改人名称
+     */
+    private String updateName;
 
     @Override
     public String toString() {
@@ -92,5 +102,21 @@ public class BaseBO implements Serializable {
 
     public void setUpdateId(Integer updateId) {
         this.updateId = updateId;
+    }
+
+    public String getCreateName() {
+        return createName;
+    }
+
+    public void setCreateName(String createName) {
+        this.createName = createName;
+    }
+
+    public String getUpdateName() {
+        return updateName;
+    }
+
+    public void setUpdateName(String updateName) {
+        this.updateName = updateName;
     }
 }

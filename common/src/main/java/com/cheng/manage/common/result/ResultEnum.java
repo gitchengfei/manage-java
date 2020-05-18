@@ -138,6 +138,24 @@ public enum ResultEnum implements Serializable {
     FILE_IS_NOT_EXIST(10801, 500, "文件不存在！"),
 
     /**
+     * 商品相关
+     */
+    PRODUCT_TYPE_NAME_IS_NULL(20000, 500, "商品类型名称不能为空！"),
+    PRODUCT_TYPE_NAME_IS_EXIST(20001, 500, "商品类型名称已存在！"),
+    PRODUCT_TYPE_EXIST_CHILD(20002, 500, "商品类型下存在子类型，请先删除子类型！"),
+
+
+    /**
+     * 客户相关
+     */
+    CUSTOMER_NAME_IS_NULL(30000, 500, "客户姓名不能为空！"),
+    CUSTOMER_PHONE_IS_NULL(30001, 500, "客户电话不能为空！"),
+    CUSTOMER_PHONE_LENGTH_ERROR(30002, 500, "客户电话长度不是11位数字！"),
+    CUSTOMER_ADDRESS_IS_NULL(30003, 500, "客户地址不能为空！"),
+    CUSTOMER_PRODUCT_TYPE_IS_NULL(30004, 500, "客户意向商品不能为空！"),
+    CUSTOMER_FOLLOW_UP_CUSTOMER_ID_OR_LOG_IS_NULL(30100,500, "客户ID或日志不能为空！"),
+
+    /**
      * 工具类相关
      */
     DATE_TRANSFORM_ERROR(80701, 500, "时间转换异常！"),
