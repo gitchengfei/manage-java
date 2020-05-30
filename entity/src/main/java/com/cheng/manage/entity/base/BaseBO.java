@@ -1,9 +1,6 @@
 package com.cheng.manage.entity.base;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -46,11 +43,13 @@ public class BaseBO implements Serializable {
     /**
      * 创建人名称
      */
+    @Transient
     private String createName;
 
     /**
      * 修改人名称
      */
+    @Transient
     private String updateName;
 
     @Override
