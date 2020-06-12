@@ -95,7 +95,7 @@ public class LoginServiceImpl extends SystemBaseService implements LoginService 
         } else if (str.equals(mobile)) {
             requestSource = LoginConstant.REQUEST_SOURCE_MOBILE;
         } else {
-            throw new MyException(ResultEnum.UNAUTHORIZED);
+            throw new MyException(ResultEnum.LOGIN_NAME_OR_PASS_ERROR);
         }
 
         //账号验证通过,shiro登录
