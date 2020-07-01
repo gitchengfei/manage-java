@@ -55,7 +55,7 @@
         <json.version>20170516</json.version>
 
         <!-- quartz -->
-        <quartz.version>2.2.1</quartz.version>
+        <quartz.version>2.3.2</quartz.version>
     </properties>
 
 
